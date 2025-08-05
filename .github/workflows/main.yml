@@ -1,0 +1,69 @@
+name: Deploy Blazor WebAssembly to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy-to-github-pages:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    
+    - name: Publish
+      run: dotnet publish --configuration Release --no-build --output release
+    
+    - name: Change base-tag in index.html for GitHub Pages
+      run: |
+        sed -i 's|<base href="/" />|<base href="/MyBlazorAppSourse/" />|g' release/wwwroot/index.html
+        echo "Updated base href in index.html"
+        grep "base href" release/wwwroot/index.html
+    
+    - name: Ensure 404.html exists for SPA routing
+      run: |
+        if [ ! -f release/wwwroot/404.html ]; then
+          cp release/wwwroot/index.html release/wwwroot/404.html
+        fi
+    
+    - name: Add .nojekyll file
+      run: touch release/wwwroot/.nojekyll
+    
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+      
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: release/wwwroot
+        
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
