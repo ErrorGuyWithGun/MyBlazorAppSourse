@@ -42,7 +42,10 @@ jobs:
       run: dotnet publish --configuration Release --no-build --output release
     
     - name: Change base-tag in index.html for GitHub Pages
-      run: sed -i 's|<base href="/" />|<base href="https://h33h.github.io/MyBlazorAppSourse/" />|g' release/wwwroot/index.html
+      run: |
+        sed -i 's|<base href="/" />|<base href="/MyBlazorAppSourse/" />|g' release/wwwroot/index.html
+        echo "Updated base href in index.html"
+        grep "base href" release/wwwroot/index.html
     
     - name: Ensure 404.html exists for SPA routing
       run: |
