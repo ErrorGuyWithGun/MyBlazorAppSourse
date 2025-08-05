@@ -49,13 +49,17 @@
         // browser's history using window.history.replaceState(...)
         
         (function(l) {
+            console.log('Current location:', l.href);
+            console.log('Search string:', l.search);
+            
             if (l.search[1] === '/' ) {
+                console.log('Processing redirect from 404 page');
                 var decoded = l.search.slice(1).split('&').map(function(s) { 
                     return s.replace(/~and~/g, '&')
                 }).join('?');
-                window.history.replaceState(null, null,
-                    l.pathname.slice(0, -1) + decoded + l.hash
-                );
+                var newUrl = l.pathname.slice(0, -1) + decoded + l.hash;
+                console.log('Redirecting to:', newUrl);
+                window.history.replaceState(null, null, newUrl);
             }
         }(window.location))
     </script>

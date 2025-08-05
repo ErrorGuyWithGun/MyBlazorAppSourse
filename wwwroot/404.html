@@ -12,7 +12,7 @@
         // string into just a query string, and then redirects the browser
         // to the new url with only a query string and hash fragment
         
-        var pathSegmentsToKeep = 1; // Change this if you have a custom domain or subdirectory
+        var pathSegmentsToKeep = 1; // For GitHub Pages with repo name
         
         var l = window.location;
         l.replace(
@@ -25,5 +25,6 @@
     </script>
 </head>
 <body>
+    <!-- GitHub Pages 404 redirect for SPA -->
 </body>
 </html>

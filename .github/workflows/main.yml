@@ -44,8 +44,11 @@ jobs:
     - name: Change base-tag in index.html for GitHub Pages
       run: sed -i 's|<base href="/" />|<base href="https://h33h.github.io/MyBlazorAppSourse/" />|g' release/wwwroot/index.html
     
-    - name: Copy index.html to 404.html for SPA routing
-      run: cp release/wwwroot/index.html release/wwwroot/404.html
+    - name: Ensure 404.html exists for SPA routing
+      run: |
+        if [ ! -f release/wwwroot/404.html ]; then
+          cp release/wwwroot/index.html release/wwwroot/404.html
+        fi
     
     - name: Add .nojekyll file
       run: touch release/wwwroot/.nojekyll
