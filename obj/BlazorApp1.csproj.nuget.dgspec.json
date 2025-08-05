@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\MyBlazorAppSourse\\BlazorApp1.csproj": {}
+    "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {}
   },
   "projects": {
-    "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\MyBlazorAppSourse\\BlazorApp1.csproj": {
+    "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\MyBlazorAppSourse\\BlazorApp1.csproj",
+        "projectUniqueName": "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
         "projectName": "BlazorApp1",
-        "projectPath": "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\MyBlazorAppSourse\\BlazorApp1.csproj",
+        "projectPath": "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\BlazorApp1\\BlazorApp1.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\MyBlazorAppSourse\\obj\\",
+        "outputPath": "E:\\Data Research\\ItransitionStude\\task 4\\BlazorApp1\\BlazorApp1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -60,6 +60,16 @@
               "target": "Package",
               "version": "[8.0.17, )"
             },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.8, )"
+            },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
@@ -71,6 +81,10 @@
               "target": "Package",
               "version": "[9.0.8, )",
               "autoReferenced": true
+            },
+            "Npgsql": {
+              "target": "Package",
+              "version": "[9.0.3, )"
             },
             "bootstrap": {
               "target": "Package",
