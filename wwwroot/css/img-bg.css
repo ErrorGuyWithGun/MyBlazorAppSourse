@@ -1,0 +1,14 @@
+﻿.last {
+    background-image: url("../assets/Background.png");
+    height: 100vh;
+    float: right;
+    width: 50%;
+}
+
+@media (max-width: 1000px) {
+    .last {
+        background-image: unset;
+        width: 0%;
+        height: unset;
+    }
+}

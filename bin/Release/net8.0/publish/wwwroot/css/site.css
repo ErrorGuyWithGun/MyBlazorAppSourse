@@ -1,0 +1,68 @@
+.text {
+    font-size: 15px;
+}
+
+
+
+.fullscreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+#app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.column {
+    float: left;
+    padding-top: 10%;
+    padding-left: 10%;
+
+}
+
+.half {
+    float: left;
+    width: 40vw;
+    height:15vh;
+}
+
+@media (max-width: 1000px) {
+    .half {
+        width: 60vw;
+    }
+
+}
+
+.footer {
+    float: left;
+    width: 40vw;
+}
