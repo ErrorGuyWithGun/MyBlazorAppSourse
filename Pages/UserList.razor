@@ -37,10 +37,10 @@
             {
                     <li class="page-item"><a class="page-link" href="/MyBlazorAppSourse/UserList" @onclick="@(() => GoToPage(1))">1</a></li>
            
+                    <li class="page-item"><a class="page-link" href="/MyBlazorAppSourse/UserList" @onclick="@(() => GoToPage(2))">2</a></li>
             }
             @if (curentPage > 2)
             {
-                    <li class="page-item"><a class="page-link" href="/MyBlazorAppSourse/UserList" @onclick="@(() => GoToPage(2))">2</a></li>
                 <p class="m-3"> ... </p>
                     <li class="page-item"><a class="page-link" href="/MyBlazorAppSourse/UserList">@curentPage</a></li>
             }
