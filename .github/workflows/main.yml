@@ -43,7 +43,7 @@ jobs:
     
     - name: Change base-tag in index.html for GitHub Pages
       run: |
-        sed -i 's|<base href="/" />|<base href="/MyBlazorAppSourse/" />|g' release/wwwroot/index.html
+        sed -i 's|<base href="/" />|<base href="/" />|g' release/wwwroot/index.html
         echo "Updated base href in index.html"
         grep "base href" release/wwwroot/index.html
     
