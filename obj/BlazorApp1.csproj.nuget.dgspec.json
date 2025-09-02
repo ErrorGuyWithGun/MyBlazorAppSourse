@@ -102,6 +102,10 @@
               "target": "Package",
               "version": "[9.0.3, )"
             },
+            "PublishSPAforGitHubPages.Build": {
+              "target": "Package",
+              "version": "[3.0.1, )"
+            },
             "bootstrap": {
               "target": "Package",
               "version": "[5.3.7, )"

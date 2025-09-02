@@ -14,6 +14,12 @@
           "lib/net8.0/Blazored.LocalStorage.dll": {}
         }
       },
+      "BlazorWasmBrotliLoader.Build/1.0.1": {
+        "type": "package",
+        "build": {
+          "build/BlazorWasmBrotliLoader.Build.targets": {}
+        }
+      },
       "bootstrap/5.3.7": {
         "type": "package",
         "contentFiles": {
@@ -1381,6 +1387,16 @@
           "lib/net8.0/Npgsql.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "PublishSPAforGitHubPages.Build/3.0.1": {
+        "type": "package",
+        "dependencies": {
+          "BlazorWasmBrotliLoader.Build": "1.0.1"
+        },
+        "build": {
+          "build/PublishSPAforGitHubPages.Build.props": {},
+          "build/PublishSPAforGitHubPages.Build.targets": {}
         }
       },
       "SQLitePCLRaw.bundle_e_sqlite3/2.1.10": {
@@ -1808,6 +1824,12 @@
           "lib/net8.0/Blazored.LocalStorage.dll": {}
         }
       },
+      "BlazorWasmBrotliLoader.Build/1.0.1": {
+        "type": "package",
+        "build": {
+          "build/BlazorWasmBrotliLoader.Build.targets": {}
+        }
+      },
       "bootstrap/5.3.7": {
         "type": "package",
         "contentFiles": {
@@ -3177,6 +3199,16 @@
           }
         }
       },
+      "PublishSPAforGitHubPages.Build/3.0.1": {
+        "type": "package",
+        "dependencies": {
+          "BlazorWasmBrotliLoader.Build": "1.0.1"
+        },
+        "build": {
+          "build/PublishSPAforGitHubPages.Build.props": {},
+          "build/PublishSPAforGitHubPages.Build.targets": {}
+        }
+      },
       "SQLitePCLRaw.bundle_e_sqlite3/2.1.10": {
         "type": "package",
         "dependencies": {
@@ -3516,6 +3548,27 @@
         "lib/net6.0/Blazored.LocalStorage.dll",
         "lib/net7.0/Blazored.LocalStorage.dll",
         "lib/net8.0/Blazored.LocalStorage.dll"
+      ]
+    },
+    "BlazorWasmBrotliLoader.Build/1.0.1": {
+      "sha512": "K5J4H+t0Y8yTUL8mV1SXuALEXTfnqbGWwmvtsv1qVaY+5P3TrSI5mHPdeow4Ib7KCgmYyLgdBD1HtT4NKvAksA==",
+      "type": "package",
+      "path": "blazorwasmbrotliloader.build/1.0.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "blazorwasmbrotliloader.build.1.0.1.nupkg.sha512",
+        "blazorwasmbrotliloader.build.nuspec",
+        "build/BlazorWasmBrotliLoader.Build.targets",
+        "bundle/scripts/brotliloader.js",
+        "bundle/scripts/brotliloader.min.js",
+        "bundle/scripts/decode.js",
+        "bundle/scripts/decode.min.js",
+        "nupkg-icon.png",
+        "tools/BlazorWasmBrotliLoader.Build.dll",
+        "tools/BrotliSharpLib.dll"
       ]
     },
     "bootstrap/5.3.7": {
@@ -5895,6 +5948,23 @@
         "postgresql.png"
       ]
     },
+    "PublishSPAforGitHubPages.Build/3.0.1": {
+      "sha512": "DDv6bGumRljmbxlX8bkwrRQ3S2CTSYi1d4cH4wQCfKzEKnphHEB/ChkwuObImTZNwv/bzNwSg/4u1Nd/M0xnIQ==",
+      "type": "package",
+      "path": "publishspaforgithubpages.build/3.0.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "build/PublishSPAforGitHubPages.Build.props",
+        "build/PublishSPAforGitHubPages.Build.targets",
+        "nupkg-icon.png",
+        "publishspaforgithubpages.build.3.0.1.nupkg.sha512",
+        "publishspaforgithubpages.build.nuspec",
+        "tools/PublishSPAforGitHubPages.Build.dll"
+      ]
+    },
     "SQLitePCLRaw.bundle_e_sqlite3/2.1.10": {
       "sha512": "UxWuisvZ3uVcVOLJQv7urM/JiQH+v3TmaJc1BLKl5Dxfm/nTzTUrqswCqg/INiYLi61AXnHo1M1JPmPqqLnAdg==",
       "type": "package",
@@ -6470,6 +6540,7 @@
       "Microsoft.NET.ILLink.Tasks >= 8.0.19",
       "Microsoft.NET.Sdk.WebAssembly.Pack >= 9.0.8",
       "Npgsql >= 9.0.3",
+      "PublishSPAforGitHubPages.Build >= 3.0.1",
       "bootstrap >= 5.3.7"
     ]
   },
@@ -6574,6 +6645,10 @@
           "Npgsql": {
             "target": "Package",
             "version": "[9.0.3, )"
+          },
+          "PublishSPAforGitHubPages.Build": {
+            "target": "Package",
+            "version": "[3.0.1, )"
           },
           "bootstrap": {
             "target": "Package",
