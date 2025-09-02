@@ -67,15 +67,24 @@ html, body {
     .tableAdaptiv {
     
         font-size: 10px;
-  
+        margin:inherit
+    
+    }
+    .columText
+    {
+
     }
 }
-@media (mix-width:600px)
+@media (min-width:600px)
 {
     .tableAdaptiv {
     
-        w-75;
+        width:85vw;
+        
   
+    }
+    .columText {
+        
     }
 }
 
