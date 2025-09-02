@@ -60,8 +60,23 @@ html, body {
         float: none;
         height: 100vh;
     }
+}
 
-
+@media (max-width:600px)
+{
+    .tableAdaptiv {
+    
+        font-size: 10px;
+  
+    }
+}
+@media (mix-width:600px)
+{
+    .tableAdaptiv {
+    
+        w-75;
+  
+    }
 }
 
 .footer {

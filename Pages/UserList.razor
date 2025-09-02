@@ -12,7 +12,7 @@
 @using BlazorApp1.Components
 
 
-<div class="container text-center w-75">
+<div class="container text-center">
     <_ActionBar openEditPanel="openEditPanel" 
         OnEdit="Edit" 
         OnBlock="Block" 
@@ -29,8 +29,8 @@
 
    }
    @if(!openEditPanel && !isDisable){
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center p-2">
+    <nav aria-label="Page navigation example" class="p-5">
+        <ul class="pagination justify-content-center p-2 paggination">
                 <li class="page-item"><a class="page-link" href="/MyBlazorAppSourse/UserList" @onclick="@(() => ChangePage(-1))">Previous</a></li>
                 <li class="page-item"><a class="page-link" href="/MyBlazorAppSourse/UserList" @onclick="@(() => GoToPage(0))">0</a></li>
             @if (totalPage > 1)
