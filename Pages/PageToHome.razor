@@ -1,0 +1,10 @@
+﻿@page "/"
+@inject NavigationManager navigationManager
+<h3>PageToHome</h3>
+
+@code {
+    protected override void OnInitialized()
+    {
+        navigationManager.NavigateTo("https://errorguywithgun.github.io/MyBlazorAppSourse/Home");
+    }
+}
