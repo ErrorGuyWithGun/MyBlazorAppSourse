@@ -1,4 +1,4 @@
-﻿@page "/Home"
+﻿@page "/"
 @inject NavigationManager NavigationManager
 @inject UserService UserService
 @inject CurrentUser currentUser
@@ -71,11 +71,11 @@
     }
     private void SignIn()
     {
-        NavigationManager.NavigateTo("/SignIn");
+        NavigationManager.NavigateTo("https://errorguywithgun.github.io/MyBlazorAppSourse/SignIn");
     }
 
     private void UsersList()
     {
-        NavigationManager.NavigateTo("/UserList");
+        NavigationManager.NavigateTo("https://errorguywithgun.github.io/MyBlazorAppSourse/UserList");
     }
 }
