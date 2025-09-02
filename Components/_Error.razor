@@ -1,0 +1,9 @@
+﻿
+<div class="@ErrorStyle" role="alert" >@Error</div>
+
+@code {
+    [Parameter]
+    public string Error { get; set; } = string.Empty;
+    [Parameter]
+    public string ErrorStyle { get; set; } = string.Empty;
+}

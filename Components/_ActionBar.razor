@@ -1,0 +1,41 @@
+﻿@inject NavigationManager NavigationManager
+
+<div class="navbar justify-content-md-end">
+    <div class="navbar justify-content-md-end">
+        @if (openEditPanel == true)
+        {
+            <_ButtonSubmit ButtnText="Cancel ❌️	" ButtnType="btn-danger" OnClick="OnClosePanel" IsDisable="@isDisable"/>
+            <_ButtonSubmit ButtnText="Save ✔️" ButtnType="btn-success" OnClick="OnSaveChange" IsDisable="@isDisable" />
+        }
+        else{
+            <_ButtonSubmit OnClick="Return" ButtnText="Back to menu" ButtnType="btn-primary" IsDisable="@isDisable"/>
+            <_ButtonSubmit OnClick="OnEdit" ButtnText="Edit 🖊️" ButtnType="btn-info " IsDisable="@isDisable" />
+            <_ButtonSubmit OnClick="OnDelete" ButtnText="Delete 🔥" ButtnType="btn-danger " IsDisable="@isDisable" />
+            <_ButtonSubmit OnClick="OnBlock" ButtnText="Block 🔒" ButtnType="btn-warning " IsDisable="@isDisable" />
+            <_ButtonSubmit OnClick="OnUnblock" ButtnText="Unblock 🔓" ButtnType="btn-success " IsDisable="@isDisable" />
+        }
+    </div>
+</div>
+@code {
+
+    private void Return()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+    [Parameter]
+    public bool isDisable { get; set; }
+    [Parameter]
+    public bool openEditPanel{ get; set; }
+    [Parameter]
+    public EventCallback OnEdit { get; set; }
+    [Parameter]
+    public EventCallback OnDelete { get; set; }
+    [Parameter]
+    public EventCallback OnBlock { get; set; }
+    [Parameter]
+    public EventCallback OnUnblock { get; set; }
+    [Parameter]
+    public EventCallback OnClosePanel { get; set; }
+    [Parameter]
+    public EventCallback OnSaveChange { get; set; }
+}

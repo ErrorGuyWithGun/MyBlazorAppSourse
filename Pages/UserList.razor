@@ -1,0 +1,223 @@
+﻿@page "/UserList"
+@inject HttpClient Http
+@inject AdminService AdminService
+@inject NavigationManager NavigationManager
+@inject List<EditModel> userEdit
+@inject UserService UserService
+@inject CurrentUser currentUser
+
+@using System.Text.Json
+@using MyBlazorAppSourse.Services
+@using MyBlazorAppSourse.Models
+@using BlazorApp1.Components
+
+
+<div class="container text-center w-75">
+    <_ActionBar openEditPanel="openEditPanel" 
+        OnEdit="Edit" 
+        OnBlock="Block" 
+        OnUnblock="Unblock"
+        OnDelete="Delete" 
+        OnClosePanel="ClosePanel" 
+        OnSaveChange="SaveChange"
+        isDisable="@isDisable" />
+
+    <_TableHeader selectAll="selectAll" ToggleSelectAll="ToggleSelectAll" disable="openEditPanel" />
+   @foreach (var user in users)
+   {
+        <_TabelUserList openEditPanel="openEditPanel"  user="user" ToggleUser="@((args) => ToggleUser(args))"/>
+
+   }
+   @if(!openEditPanel && !isDisable){
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center p-2">
+            <li class="page-item"><a class="page-link" href="/UserList" @onclick="@(() => ChangePage(-1))">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="/UserList" @onclick="@(() => GoToPage(0))">0</a></li>
+            @if (totalPage > 1)
+            {
+            <li class="page-item"><a class="page-link" href="/UserList" @onclick="@(() => GoToPage(1))">1</a></li>
+           
+            }
+            @if (curentPage > 2)
+            {
+            <li class="page-item"><a class="page-link" href="/UserList" @onclick="@(() => GoToPage(2))">2</a></li>
+                <p class="m-3"> ... </p>
+                <li class="page-item"><a class="page-link" href="/UserList">@curentPage</a></li>
+            }
+            <li class="page-item"><a class="page-link" href="/UserList" @onclick="@(() => ChangePage(1))">Next</a></li>
+        </ul>
+    </nav>
+    }
+</div>
+
+@code {
+    private List<User> users = new List<User>();
+    private List<EditModel> selectedUsers = new List<EditModel>();
+
+    private static int totalUser;
+    private const int userPage = 5;
+    private static int startIndex = 0;
+    private int endIndex = startIndex + userPage;
+    private int curentPage=1;
+    private int totalPage;
+    private bool selectAll = false;
+    private bool openEditPanel = false;
+    private bool isDisable;
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentUser = await UserService.GetCurrentUser();
+        await UserService.CheckUserStatus(currentUser);
+        users = await AdminService.LoadUsers(startIndex,endIndex);
+        totalUser = await AdminService.GetUserCount();
+        await LoadRole(users);
+        totalPage = (int)Math.Floor((double)totalUser / userPage);
+    }
+    private void ToggleSelectAll(bool value)
+    {
+        selectAll = value;
+        if (selectAll)
+        {
+            foreach (var user in users)
+            {
+                user.IsSelected = selectAll;
+                selectedUsers.Add(user);
+            }
+        }
+        else
+        {
+            foreach (var user in users)
+            {
+                user.IsSelected = selectAll;
+                selectedUsers.Remove(user);
+            }
+        }
+
+    }
+
+    private void ToggleUser((User user, bool isSelected)args)
+    {
+        var (user, isSelected) = args;
+        user.IsSelected = isSelected;
+        selectAll = users.All(u => u.IsSelected);
+
+        if (isSelected)
+        {
+            if (!selectedUsers.Any(u => u.Email == user.Email))
+            {
+                selectedUsers.Add(user);
+            }
+        }
+        else
+        {
+            var userToRemove = selectedUsers.FirstOrDefault(u => u.Email == user.Email);
+            if (userToRemove != null)
+            {
+                selectedUsers.Remove(userToRemove);
+            }
+        }
+    }
+
+    private async Task ChangePage(int direction)
+    {
+        int newPage = curentPage + direction;
+        if (!(newPage < 0 || newPage >= totalPage))
+        {
+            curentPage = newPage;
+            startIndex = curentPage * userPage;
+            endIndex = startIndex + userPage;
+            selectAll = false;
+            users = await AdminService.LoadUsers(startIndex, endIndex);
+            await LoadRole(users);
+        }
+    }
+
+    private async Task GoToPage(int page)
+    {
+
+        curentPage = page;
+        startIndex = curentPage * userPage;
+        endIndex = startIndex + userPage;
+        selectAll = false;
+        users = await AdminService.LoadUsers(startIndex, endIndex);
+        await LoadRole(users);
+
+    }
+
+    private async Task LoadRole(List<User> users)
+    {
+        foreach (var u in users)
+        {
+            u.Role = await AdminService.LoadRole(u.Email);
+        }
+    }
+
+    private async Task Edit()
+    {
+        User? selectedUser = users.FirstOrDefault(u => u.IsSelected);
+        if (selectedUser != null) {
+            openEditPanel = true;
+        }
+    }
+
+    private async Task Block()
+    {
+        isDisable = true;
+        if(selectedUsers.Count != 0) {
+            foreach (var u in selectedUsers)
+            {
+                u.IsActive = false;
+                await AdminService.EditUser(u);
+            }
+            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        }
+
+    }
+
+    private async Task Unblock()
+    {
+        isDisable = true;
+        if (selectedUsers.Count != 0)
+        {
+            foreach (var u in selectedUsers)
+            {
+                u.IsActive = true;
+                await AdminService.EditUser(u);
+            }
+            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        }
+
+    }
+
+    private async Task Delete()
+    {
+        isDisable = true;
+        if (selectedUsers.Count != 0)
+        {
+            foreach (var u in selectedUsers)
+            {
+                await AdminService.DeleteUser(u.Email);
+            }
+            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        }
+
+    }
+
+    private async Task ClosePanel()
+    {
+        userEdit.Clear();
+        openEditPanel = false;
+    }
+
+    private async Task SaveChange()
+    {
+        isDisable = true;
+        foreach (EditModel u in userEdit)
+        {
+            await AdminService.EditUser(u);
+        }
+        openEditPanel = false;
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+
+    }
+}

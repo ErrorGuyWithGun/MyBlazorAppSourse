@@ -43,7 +43,6 @@ html, body {
 }
 
 .column {
-    float: left;
     padding-top: 10%;
     padding-left: 10%;
 
@@ -57,12 +56,14 @@ html, body {
 
 @media (max-width: 1000px) {
     .half {
-        width: 60vw;
+        width: 90vw;
+        float: none;
+        height: 100vh;
     }
+
 
 }
 
 .footer {
-    float: left;
-    width: 40vw;
+  
 }

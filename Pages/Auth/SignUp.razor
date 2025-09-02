@@ -1,0 +1,92 @@
+﻿@page "/SignUp"
+@using MyBlazorAppSourse.Services
+@using MyBlazorAppSourse.Models
+@using BlazorApp1.Components
+@inject UserService UserService
+@inject NavigationManager NavigationManager
+
+<PageTitle>SignUp</PageTitle>
+
+<div class="text-center fullscreen text box">
+    <div class="body">
+        <div id="pictures" class="last"></div>
+        <div id="contactform" class="column half">
+            <div class="title-text  text-start p-2 col-md-6">
+                <h3>Sign Up!</h3>
+            </div>
+            <EditForm Model="newUser" OnValidSubmit="Register">
+                <_NameInput @bind-Value="newUser.Name" IsDisable="@isDisable" OnFocus="ClearError"/>
+                <_EmailInput @bind-Value="newUser.Email" IsDisable="@isDisable" OnFocus="ClearError" />
+                <_PasswordInput @bind-Value="newUser.Password" plaseholder="Password" IsDisable="@isDisable" OnFocus="ClearError" />
+                <_Error Error="@error" ErrorStyle="@errorStyle"/>
+                <_ButtonSubmit OnClick="Register" ButtnText="Submit" ButtnType="btn-primary" IsDisable="@isDisable" />
+            </EditForm>
+        </div >
+    </div>
+</div>
+
+@code {
+    private string error = string.Empty;
+    private bool isDisable;
+    private string? errorStyle = string.Empty;
+
+    private RegisterUser newUser = new RegisterUser();
+
+    private async Task Register()
+    {
+        isDisable = true;
+        var checkUserEmail = await UserService.GetIfUserExist(newUser.Email);
+        if(checkUserEmail)
+        {
+            error = "That User Exsist!";
+            errorStyle = "alert alert-danger";
+            isDisable = false;
+        }
+        else
+        {
+            var checkUserName = await UserService.GetIfNameExist(newUser.Name);
+            if (checkUserName)
+            {
+                error = "This Name Is Already In Use!";
+                errorStyle = "alert alert-danger";
+                isDisable = false;
+            }
+            else
+            {
+                if (newUser.Password.Count() < 6)
+                {
+                    error = "Your Password Is Too Weak";
+                    errorStyle = "alert alert-danger";
+                    isDisable = false;
+                }
+                else { 
+                    var response = await UserService.Register(newUser);
+                    if (response)
+                    {
+                        error = "User Create! Check your Email!";
+                        errorStyle = "alert alert-primary";
+                        isDisable = false;
+                    }
+                    else
+                    {
+                        error = "We Can't Send You A Confirmation Email On This Email!";
+                        errorStyle = "alert alert-danger";
+                        isDisable = false;
+                    }
+                }
+            }
+        }
+        if (newUser.Name == null || newUser.Email == null || newUser.Password == null)
+        {
+            error = "Fields Must Not Be Empty";
+            errorStyle = "alert alert-danger";
+            isDisable = false;
+        }
+    }
+
+    private void ClearError()
+    {
+        error = string.Empty;
+        errorStyle = string.Empty;
+    }
+}

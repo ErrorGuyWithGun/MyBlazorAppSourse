@@ -1,0 +1,59 @@
+﻿@using MyBlazorAppSourse.Models
+@inject List<EditModel> EditUserService
+
+<div class="row p-3 text-dark-emphasis bg-dark-subtle border border-dark-subtle">
+    <div class="col">
+        <input class="form-check-input" disabled=@openEditPanel type="checkbox"
+               checked="@user.IsSelected"
+               id="userCheckbox-@user.Id"
+               @onchange="@((e) => ToggleUser.InvokeAsync((user, (bool)e.Value)))"
+               value=""
+               aria-label="..." />
+    </div>
+    @if (openEditPanel == false || user.IsSelected != true)
+    {
+        <div class="col">@user.UserName</div>
+        <div class="col">@user.Email</div>
+        <div class="col">@user.Role</div>
+        <div class="col">@user.IsActive</div>
+    }
+    else
+    {
+        var editModel = EditUserService.FirstOrDefault(u => u.Email == user.Email); ;
+        if (editModel == null)
+        {
+            editModel = new EditModel
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                Role = user.Role,
+                IsActive = user.IsActive
+            };
+            EditUserService.Add(editModel);
+        }
+        <div class="col">
+            <input type="text" class="form-control text-center"
+                   @bind="editModel.UserName"
+                   placeholder="@user.UserName" />
+        </div>
+            <div class="col">@user.Email</div>
+        <div class="col">
+            <select class="form-select text-center" @bind="editModel.Role">
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+        <div class="col">@user.IsActive</div>
+    }
+</div>
+@code {
+    [Parameter]
+    public bool openEditPanel { get; set; }
+    [Parameter]
+    public string emailUser { get; set; }
+    [Parameter]
+    public User user { get; set; }
+
+    [Parameter]
+    public EventCallback<(User user, bool isSelected)> ToggleUser { get; set; }
+}

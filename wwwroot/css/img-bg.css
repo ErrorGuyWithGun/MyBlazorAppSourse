@@ -1,8 +1,11 @@
 ﻿.last {
-    background-image: url("../assets/Background.png");
     height: 100vh;
     float: right;
     width: 50%;
+    background-image: url(https://drive.google.com/thumbnail?id=18zCZKzsoOvsQ2LsmQyMMYflqgSnlJ0Hh);
+    background-repeat: no-repeat;
+    background-size:cover;
+    min-height:10px;
 }
 
 @media (max-width: 1000px) {
@@ -10,5 +13,6 @@
         background-image: unset;
         width: 0%;
         height: unset;
+        float:unset;
     }
 }

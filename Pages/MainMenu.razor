@@ -1,0 +1,81 @@
+﻿@page "/"
+@inject NavigationManager NavigationManager
+@inject UserService UserService
+@inject CurrentUser currentUser
+@using MyBlazorAppSourse.Services
+@using MyBlazorAppSourse.Models
+@using BlazorApp1.Components
+
+
+<nav class="navbar fixed-top bg-body-tertiary bg-dark " data-bs-theme="dark">
+    <div class="container-fluid ">
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <_ButtonSubmit 
+                        OnClick="UsersList" 
+                        ButtnText="Users" 
+                        Style="me-md-2" 
+                        ButtnType="btn-secondary" />
+                </div>
+            </Authorized>
+            <NotAuthorized>
+
+            </NotAuthorized>
+        </AuthorizeView>
+        <div class="justify-content-end">
+            @if (!string.IsNullOrEmpty(currentUser.Email))
+            {
+                <_ButtonSubmit OnClick="LogOut"
+                ButtnText="LogOut"
+                Style="me-md-2"
+                ButtnType="btn-outline-dark btn-primary" />
+            }
+            else
+            {
+                <_ButtonSubmit OnClick="SignIn" 
+                ButtnText="Sign In" 
+                Style="me-md-2" 
+                ButtnType="btn-outline-dark btn-primary" />
+            }
+        </div>
+    </div>
+</nav>
+
+<div class="pt-5 ">
+    @if(!string.IsNullOrEmpty(currentUser.Email))
+    {
+        <p>Hello, @currentUser.UserName! You'r Role is @currentUser.Role!'</p>
+       
+    }
+    else
+    {
+        <p>Guest</p>
+    }
+</div>
+
+
+@code {
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentUser = await UserService.GetCurrentUser();
+        await UserService.CheckUserStatus(currentUser);
+
+    }
+    private async void LogOut()
+    {
+        await UserService.logOut();
+        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+
+    }
+    private void SignIn()
+    {
+        NavigationManager.NavigateTo("/SignIn");
+    }
+
+    private void UsersList()
+    {
+        NavigationManager.NavigateTo("/UserList");
+    }
+}

@@ -1,0 +1,27 @@
+﻿<div class="row p-3 text-primary-emphasis  bg-dark-subtle border border-dark-subtle rounded-top fw-bold">
+    <div class="col">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input"
+                   type="checkbox"
+                   disabled="@disable"
+                   checked="@selectAll"
+                   @onchange="@((e) => ToggleSelectAll.InvokeAsync((bool)e.Value))"
+                   id="selectAllCheckbox">
+            <label class="form-check-label" for="inlineCheckbox1">All</label>
+        </div>
+    </div>
+    <div class="col"><p>Username</p></div>
+    <div class="col"> <p>Email</p></div>
+    <div class="col"><p>Role</p></div>
+    <div class="col"><p>IsActive</p></div>
+</div>
+
+@code {
+    [Parameter]
+    public bool disable { get; set; }
+    [Parameter]
+    public bool selectAll { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ToggleSelectAll{ get; set; }
+}

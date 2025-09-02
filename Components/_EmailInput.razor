@@ -1,0 +1,41 @@
+﻿<div class="input-group p-2">
+    <input 
+        type="text" 
+        @onchange="ChangeValue"
+        value="@Value"
+        @onfocus="OnFocusHandel"
+           disabled="@IsDisable"
+        class="form-control" 
+        placeholder="Email" 
+        aria-label="Email" 
+        aria-describedby="visible-addon">
+    <input 
+        type="text" 
+        class="form-control d-none" 
+        placeholder="Hidden input" 
+        aria-label="Hidden input" 
+        aria-describedby="visible-addon">
+</div>
+
+
+@code {
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+    [Parameter]
+    public EventCallback OnFocus { get; set; }
+
+    [Parameter]
+    public bool? IsDisable { get; set; } = false;
+
+    private async Task ChangeValue(ChangeEventArgs e)
+    {
+        Value = e?.Value?.ToString();
+        await ValueChanged.InvokeAsync(Value);
+    }
+
+    private async Task OnFocusHandel()
+    { await OnFocus.InvokeAsync(); }
+}

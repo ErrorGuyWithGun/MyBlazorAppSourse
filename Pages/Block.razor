@@ -1,0 +1,14 @@
+﻿@page "/Block"
+@inject MyBlazorAppSourse.Models.CurrentUser currentUser
+@inject MyBlazorAppSourse.Services.UserService userService
+@inject NavigationManager navigationManager
+<h3>Sorry! We Close For Now :c</h3>
+
+@code {
+    protected async override void OnInitialized()
+    {
+        currentUser = await userService.GetCurrentUser();
+        if (currentUser.IsActive)
+            navigationManager.NavigateTo("/");
+    }
+}

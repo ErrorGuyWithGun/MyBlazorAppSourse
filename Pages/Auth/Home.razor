@@ -1,0 +1,73 @@
+﻿@page "/SignIn"
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject NavigationManager NavigationManager
+@inject UserService UserService
+@using MyBlazorAppSourse.Services
+@using MyBlazorAppSourse.Models
+@using BlazorApp1.Components
+
+
+<PageTitle>Home</PageTitle>
+
+<div class="text-center fullscreen text box">
+    <div class="body">
+        <div id="pictures" class="last"></div>
+        <div id="contactform" class="column half">
+            <_Title/>
+            <_EmailInput @bind-Value="loginModel.Email" IsDisable="@isDisable" OnFocus="ClearError" />
+            <_PasswordInput @bind-Value="loginModel.Password" plaseholder="Password" IsDisable="@isDisable" OnFocus="ClearError" />
+            <_Error Error="@error" ErrorStyle="@errorStyle" />
+            <_RememberMeCheckbox/>
+            <_ButtonSubmit OnClick="HandelLogic" ButtnText="Submit" ButtnType="btn-primary" IsDisable="@isDisable" />
+            <div class="p-3 d-flex align-items-center footer">
+                <span class="me-3">Don't have any account? <NavLink class="me-3" href="SignUp">Sign Up</NavLink></span>
+                <NavLink class="me-3" href="ForgotPassword">Forgot Password</NavLink>
+            </div>
+        </div>
+        
+    </div> 
+</div>
+
+@code {
+    private string error = string.Empty;
+    private bool isDisable;
+    private string? errorStyle = string.Empty;
+
+    private LoginModel loginModel = new LoginModel();
+    private async Task HandelLogic()
+    {
+        var userExist = await UserService.GetIfUserExist(loginModel.Email);
+        if (userExist)
+        {
+            isDisable = true;
+            var authStateProvider = (UserService)AuthenticationStateProvider;
+            var result = await authStateProvider.Login(loginModel);
+
+            if (result == true)
+            {
+                error = string.Empty;
+                errorStyle = string.Empty;
+                isDisable = false;
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                error = "Wrong Password!";
+                errorStyle = "alert alert-danger";
+                isDisable = false;
+            }
+        }
+        else
+        {
+            error = "User Dosent Exist";
+            errorStyle = "alert alert-danger";
+            isDisable = false;
+        }
+
+    }
+    private void ClearError()
+    {
+        error = string.Empty;
+        errorStyle = string.Empty;
+    }
+}

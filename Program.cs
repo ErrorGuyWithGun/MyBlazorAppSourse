@@ -1,20 +1,40 @@
 using BlazorApp1;
-using Microsoft.EntityFrameworkCore;
-using MyBlazorAppSourse.Data;
 using MyBlazorAppSourse.Services;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
+using MyBlazorAppSourse.Models;
+
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite("Data Source=users.db"));
-
-builder.Services.AddScoped<UserService>();
-
-var app = builder.Build();
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddScoped<HttpHandler>();
+builder.Services.AddScoped(sp => 
+{ 
+    var handler = sp.GetRequiredService<HttpHandler>();
+    handler.InnerHandler = new HttpClientHandler();
+    return new HttpClient(handler) {
+        BaseAddress = new Uri(builder.Configuration["DBAddress"]!)
+    };
+});
+
+builder.Services.AddSingleton<List<EditModel>>();
+builder.Services.AddSingleton<CurrentUser>();
+builder.Services.AddScoped<AdminService>();
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
+   sp.GetRequiredService<UserService>());
+
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddAuthorizationCore(options =>
+{
+    options.AddPolicy("OnlyAdmin", policy => policy.RequireClaim("Admin"));
+    options.AddPolicy("OnlyUser", policy => policy.RequireClaim("User"));
+});
+
 
 await builder.Build().RunAsync();
