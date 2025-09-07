@@ -1,7 +1,7 @@
 ﻿@using MyBlazorAppSourse.Models
 @inject List<EditModel> EditUserService
 
-<div class="tableAdaptiv row p-3 text-dark-emphasis bg-dark-subtle border border-dark-subtle">
+<div class="tableAdaptiv row p-3 text-dark-emphasis bg-dark-subtle border border-dark-subtle d-flex flex-nowrap overflow-auto">
     <div class="col">
         <input class="form-check-input" disabled=@openEditPanel type="checkbox"
                checked="@user.IsSelected"
@@ -31,13 +31,13 @@
             };
             EditUserService.Add(editModel);
         }
-        <div class="col-3">
+        <div class="col-md-3 col-sm-6">
             <input type="text" class="form-control text-center"
                    @bind="editModel.UserName"
                    placeholder="@user.UserName" />
         </div>
             <div class="col">@user.Email</div>
-        <div class="col-3">
+        <div class="col-md-3 col-sm-6">
             <select class="form-select text-center" @bind="editModel.Role">
                 <option value="User">User</option>
                 <option value="Admin">Admin</option>

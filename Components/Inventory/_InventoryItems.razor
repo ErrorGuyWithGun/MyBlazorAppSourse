@@ -1,0 +1,176 @@
+﻿@using MyBlazorAppSourse.Models
+@using MyBlazorAppSourse.Services
+@using MyBlazorAppSourse
+@inject InventoryService InventoryService
+@inject List<ItemModel> ItemSingletonList
+@inject ItemModel ItemSingleton
+
+@if (Items == null)
+{
+    <p>Empty</p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary mb-2 d-grid gap-2 d-md-flex justify-content-md-end"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapse-items-@inventoryId"
+                    aria-expanded="false"
+                    aria-controls="collapse-items-@inventoryId">
+                <p> Item: @(Items?.Count ?? 0)</p>
+            </button>
+        </div>
+    </div>
+    <div class="collapse" id="collapse-items-@inventoryId">
+                                    <div class="card card-body">
+   <_ActionBarItem openCreatePanel="isAddItem"
+                    OnCreate="AddItem"
+                    OnSaveChange="@(()=> Save(ItemSingleton))"
+                    openEditPanel ="@isEditItem"
+                    OnClosePanel="Close"
+                    OnDelete="DeleteItem"
+                    OnEdit="Edit"
+                    OnSaveEditChange="@(()=> SaveEdit(ItemSingletonList))"
+                    />
+    <div class="d-grid">
+    @if(isAddItem == true)
+    {
+        <_AddItem inventoryId="inventoryId"/>
+    }
+    @if (isEditItem == true)
+    {
+        foreach (ItemModel item in ItemSingletonList)
+        {
+        <_ItemEdit Item="item" />
+
+        }
+    }
+    </div>
+            @foreach (ItemModel item in Items)
+            {
+                <div class="d-flex align-items-start gap-2 mt-2">
+                    <input class="mt-2"
+                           type="checkbox"
+                           checked="@item.isSelect"
+                           @onchange="@((e) => ToggleSelection(item, (bool)e.Value))"
+                           id="itemCheckbox-@item.Id"
+                           hidden="@isHidden" />
+                    <div class="flex-grow-1">
+                        <div class="card card-body mt-1 p-2">
+                            <div class="d-flex flex-column text-start">
+                        <div class="d-flex align-items-center mb-3">
+                            <h5 class="fw-bold me-2 ">@item.Title</h5>
+                        </div>
+                                <span><strong>Price:</strong> @item.Price</span>
+                                <span><strong>Description:</strong> @item.Description</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+}
+
+@code {
+
+    [Parameter]
+    public Guid inventoryId { get; set; }
+    [Parameter]
+    public bool isHidden { get; set; }
+
+    [Parameter]
+    public EventCallback OnInventorySaved { get; set; }
+
+    private bool isAddItem { get; set; } = false;
+    private bool isEditItem { get; set; } = false;
+
+    public List<ItemModel> selectedItems { get; set; } = new List<ItemModel>();
+    private List<ItemModel> Items { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        Items = await InventoryService.LoadItem(inventoryId);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+        Items = await InventoryService.LoadItem(inventoryId);
+    }
+
+    private void ToggleSelection(ItemModel item, bool isSelect)
+    {
+        item.isSelect = isSelect;
+        if (isSelect)
+        {
+            selectedItems.Add(item);
+        }
+        else
+        {
+            selectedItems.Remove(item);
+        }
+        StateHasChanged();
+    }
+
+    private async Task AddItem()
+    {
+        isAddItem = true;
+
+    }
+    private async Task DeleteItem()
+    {
+        foreach(ItemModel item in selectedItems)
+        {
+            await InventoryService.DeleteItem(inventoryId, item.Id);
+        }
+        selectedItems.Clear();
+        OnInventorySaved.InvokeAsync();
+
+    }
+    private async Task Close()
+    {
+
+        if (isAddItem = true)
+        {
+            isAddItem = false;
+        }
+
+        if (isEditItem = true)
+        {
+            isEditItem = false;
+            ItemSingletonList.Clear();
+        }
+
+    }
+    private async Task Save(ItemModel item)
+    {
+        isAddItem = false;
+        await InventoryService.CreateItem(item);
+        OnInventorySaved.InvokeAsync();
+    }
+    private async Task SaveEdit(List<ItemModel> items)
+    {
+        isEditItem = false;
+        foreach (ItemModel item in items)
+        {
+            await InventoryService.EditItem(item);
+        }
+        selectedItems.Clear();
+        await OnInventorySaved.InvokeAsync();
+
+    }
+
+    private async Task Edit()
+    {
+        isEditItem = true;
+        ItemSingletonList = selectedItems;
+        await OnInventorySaved.InvokeAsync();
+
+    }
+   
+}

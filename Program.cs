@@ -21,9 +21,15 @@ builder.Services.AddScoped(sp =>
     };
 });
 
+builder.Services.AddSingleton<InventoryModel>();
+builder.Services.AddSingleton<List<InventoryModel>>();
+builder.Services.AddSingleton<ItemModel>();
+builder.Services.AddSingleton<List<ItemModel>>();
 builder.Services.AddSingleton<List<EditModel>>();
 builder.Services.AddSingleton<CurrentUser>();
+
 builder.Services.AddScoped<AdminService>();
+builder.Services.AddScoped<InventoryService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AuthenticationStateProvider>(sp =>

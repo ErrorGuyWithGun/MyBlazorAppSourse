@@ -1,0 +1,26 @@
+﻿@using MyBlazorAppSourse.Models
+@using MyBlazorAppSourse.Services
+@inject ItemModel ItemSingleton
+
+<input @bind=@ItemSingleton.Title class="form-control form-control-sm  m-1" type="text" placeholder="Title" aria-label=".form-control-sm example">
+<input @bind=@ItemSingleton.Price class="form-control form-control-sm  m-1" type="text" placeholder="Price" aria-label=".form-control-sm example">
+<div class="m-1 ">
+    <label for="commentText" class="form-label"></label>
+    <textarea @bind=@ItemSingleton.Description
+              class="form-control"
+              placeholder="Description" id="commentText" rows="3"></textarea>
+</div>
+@code {
+    [Parameter]
+    public Guid inventoryId { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+        ItemSingleton.inventoryId = inventoryId;
+        ItemSingleton.Title = string.Empty;
+        ItemSingleton.Price = string.Empty;
+        ItemSingleton.Description = string.Empty;
+    }
+
+}

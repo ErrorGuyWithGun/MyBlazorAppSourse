@@ -1,0 +1,26 @@
+﻿@inject MyBlazorAppSourse.Services.InventoryService InventoryService
+@using MyBlazorAppSourse.Models
+
+<div class="d-flex m-3">
+    <span class="p-2 bg-success rounded-start">Category: </span><span class="bg-info rounded-end p-2"> @category </span>
+</div>
+
+@code {
+    public string category { get; set; } = string.Empty;
+
+    [Parameter]
+    public Guid CategoryId { get; set; }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        category = await InventoryService.GetCategory(CategoryId);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        category = await InventoryService.GetCategory(CategoryId);
+
+    }
+    
+}

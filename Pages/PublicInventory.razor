@@ -1,0 +1,44 @@
+﻿@page "/PublicInventory"
+@inject NavigationManager NavigationManager
+@inject UserService UserService
+@inject CurrentUser currentUser
+@inject InventoryService InventoryService
+@using MyBlazorAppSourse.Services
+@using MyBlazorAppSourse.Models
+@using BlazorApp1.Components.Inventory
+@using BlazorApp1.Components
+
+<div class="nav justify-content-xxl-start"> 
+    <_ButtonSubmit OnClick="Return" ButtnText="Back to menu" ButtnType="btn-primary"  />
+</div>
+<div class="container text-center w-75">
+@if (publicInv != null)
+{
+    <_Inventory Inventorys="publicInv" isHidden="true" />
+}
+
+</div>
+
+
+@code {
+    List<InventoryModel> publicInv;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            publicInv = await InventoryService.LoadPublicInventory();
+            await UserService.CheckUserStatus(currentUser);
+        }
+        catch (Exception ex)
+        {
+            // Handle error
+            Console.WriteLine($"Error loading public inventories: {ex.Message}");
+        }
+    }
+
+    private void Return()
+    {
+        NavigationManager.NavigateTo("https://errorguywithgun.github.io/MyBlazorAppSourse/");
+    }
+}

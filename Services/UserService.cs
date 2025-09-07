@@ -36,7 +36,7 @@ namespace MyBlazorAppSourse.Services
 
             if (string.IsNullOrEmpty(token) || expiration < DateTime.UtcNow)
             {
-                //_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+              
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
 
@@ -67,7 +67,6 @@ namespace MyBlazorAppSourse.Services
 
                 var token = root.GetProperty("token").GetString();
                 var expiration = root.GetProperty("expiration").GetDateTime();
-
                 string roles = root.GetProperty("role").GetString();
             
                 await _localStorage.SetItemAsync("authToken", token);
@@ -102,11 +101,11 @@ namespace MyBlazorAppSourse.Services
             { 
                 var user = await _httpClient.GetFromJsonAsync<CurrentUser>($"api/Authentication/email/{email}");
                 return new CurrentUser
-                { Id = user.Id,
+                {   Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
                     IsActive = user.IsActive,
-                    Roles = user.Roles,
+                    Role = await _localStorage.GetItemAsync<string>("userRoles"),
                     Token = await _localStorage.GetItemAsync<string>("authToken"),
                     Expiration = await _localStorage.GetItemAsync<DateTime>("tokenExpiration")
                 }; 
@@ -162,6 +161,24 @@ namespace MyBlazorAppSourse.Services
                 return true;
             }
             return false;
+        }
+        public async Task<UserDTOModel> GetIfIdExist(string id) 
+        {
+            var responseMessage = await _httpClient.GetAsync($"api/Authentication/id/{id}");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var user = await _httpClient.GetFromJsonAsync<UserDTOModel>($"api/Authentication/id/{id}");
+                return new UserDTOModel
+                {
+                    Id = user.Id,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    IsActive = user.IsActive,
+                    Roles = user.Roles,
+                };
+
+            }
+            return new UserDTOModel();
         }
 
         public async Task CheckUserStatus(CurrentUser currentUser)

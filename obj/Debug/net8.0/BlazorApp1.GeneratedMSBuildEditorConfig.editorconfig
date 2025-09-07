@@ -36,8 +36,64 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/_ActionBar.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfQWN0aW9uQmFyLnJhem9y
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/AdminPanel/_ActionBar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblBhbmVsXF9BY3Rpb25CYXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/AdminPanel/_TabelUserList.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblBhbmVsXF9UYWJlbFVzZXJMaXN0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/AdminPanel/_TableHeader.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBZG1pblBhbmVsXF9UYWJsZUhlYWRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/Item/_ActionBarItem.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcSXRlbVxfQWN0aW9uQmFySXRlbS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/Item/_AddItem.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcSXRlbVxfQWRkSXRlbS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/Item/_ItemEdit.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcSXRlbVxfSXRlbUVkaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/_CreateInventory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0NyZWF0ZUludmVudG9yeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/_GetUserNameById.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0dldFVzZXJOYW1lQnlJZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/_Inventory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0ludmVudG9yeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/_InventoryActionBar.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0ludmVudG9yeUFjdGlvbkJhci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/_InventoryComments.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0ludmVudG9yeUNvbW1lbnRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/_InventoryEdit.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0ludmVudG9yeUVkaXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/_InventoryGetCategory.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0ludmVudG9yeUdldENhdGVnb3J5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/_InventoryItems.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0ludmVudG9yeUl0ZW1zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Inventory/_ItemCount.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0l0ZW1Db3VudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/_ButtonSubmit.razor]
@@ -64,14 +120,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfUmVtZW1iZXJNZUNoZWNrYm94LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/_TabelUserList.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfVGFiZWxVc2VyTGlzdC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/_TableHeader.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfVGFibGVIZWFkZXIucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
 [E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/_Title.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfVGl0bGUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -88,8 +136,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxDb25maXJtRW1haWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Pages/Auth/Home.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxIb21lLnJhem9y
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Pages/Auth/SignIn.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxTaWduSW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Pages/Auth/SignUp.razor]
@@ -112,6 +160,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFpbk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Pages/PublicInventory.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHVibGljSW52ZW50b3J5LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Pages/UserList.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlckxpc3QucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -119,7 +171,3 @@ build_metadata.AdditionalFiles.CssScope =
 [E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Layout/NavMenu.razor]
-build_metadata.AdditionalFiles.TargetPath = TGF5b3V0XE5hdk1lbnUucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = b-da4la3n260

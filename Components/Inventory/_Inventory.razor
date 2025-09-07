@@ -1,0 +1,187 @@
+﻿@inject MyBlazorAppSourse.Services.UserService UserService
+@inject MyBlazorAppSourse.Services.InventoryService InventoryService
+@using MyBlazorAppSourse.Models
+@inject InventoryModel InventorySingleton
+@inject List<InventoryModel> InventorySingletonLst
+
+    @if(isHidden != true){
+<_InventoryActionBar OnCreate="CreateInventory"
+                     OnClosePanel="Close"
+                     OnSaveChange="@(() => Save(InventorySingleton))"
+                     OnSaveEditChange="@(() => SaveEdit(InventorySingletonLst))"
+                     openCreatePanel="isCreateInventary"
+                     openEditPanel="isEditInventary"
+                     OnDelete="Delete"
+                     OnEdit="Edit"
+                    />
+    }
+
+
+<div class="container text-center w-75">
+    <div class="accordion row" id="accordionExample">
+       
+        @if (isCreateInventary == true)
+        {
+            <_CreateInventory />
+        }
+ 
+        @if (isEditInventary == true)
+        {
+            foreach (InventoryModel inventory in InventorySingletonLst)
+            {
+                <_InventoryEdit Inventory="inventory" />
+
+            }
+        }
+
+        @foreach (InventoryModel inventory in Inventorys)
+        {
+            if (inventory != null)
+            {
+                <div class="">
+                    <div class="accordion-item flex-grow-1">
+                        <h2 class="accordion-header d-flex m-2">
+                            <input class="form-check-input me-2"
+                                   type="checkbox"
+                                   id="inventoryCheckbox-@inventory.Id"
+                                   checked="@inventory.isSelected"
+                                   @onchange="@((e) => ToggleSelection(inventory, (bool)e.Value))"
+                                   hidden="@isHidden" />
+                            <button class="accordion-button"
+                                    type="button"
+                                    data-bs-toggle="collapse"
+                                    data-bs-target="#@inventory.Id"
+                                    aria-expanded="false"
+                                    aria-controls="@inventory.Id">
+
+                                <p class="d-flex justify-content-between w-100">
+                                    <h5>@inventory.Name  </h5><i class="text-muted fst-italic fw-normal ms-1">by @GetUserName(inventory.userId)</i>
+                                </p>
+                            </button>
+                        </h2>
+                        <div id="@inventory.Id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <_InventoryItems inventoryId="inventory.Id" isHidden="isHidden" OnInventorySaved="OnInventorySaved" />
+                            </div>
+                            <_InventoryGetCategory CategoryId="inventory.categoryId" />
+                            <_InventoryComments InventoryId="inventory.Id" />
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public List<InventoryModel> Inventorys { get; set; } = new List<InventoryModel>();
+
+    public List<InventoryModel> selectedInventorys { get; set; } = new List<InventoryModel>();
+
+    [Parameter]
+    public bool isHidden { get; set; } = false;
+
+    [Parameter]
+    public EventCallback OnInventorySaved { get; set; }
+
+    private bool isCreateInventary { get; set; } = false;
+    private bool isEditInventary { get; set; } = false;
+    private bool isAddItem { get; set; } = false;
+    private string error = string.Empty;
+    private Dictionary<string, string> userNames = new Dictionary<string, string>();
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+        foreach (var inventory in Inventorys)
+        {
+            if (inventory != null && !string.IsNullOrEmpty(inventory.userId) && !userNames.ContainsKey(inventory.userId))
+            {
+                var user = await UserService.GetIfIdExist(inventory.userId);
+                userNames[inventory.userId] = user?.UserName;
+            }
+        }
+    }
+
+    private void ToggleSelection(InventoryModel inventory, bool isSelected)
+    {
+        inventory.isSelected = isSelected;
+        if (isSelected)
+        {
+            selectedInventorys.Add(inventory);
+        }
+        else
+        {
+            selectedInventorys.Remove(inventory);
+        }
+        StateHasChanged(); 
+    }
+
+    private string GetUserName(string userId)
+    {
+        return userNames.GetValueOrDefault(userId, "Unknown User");
+    }
+
+    private async Task CreateInventory()
+    {
+        isCreateInventary = true;
+    }
+
+    private async Task Close()
+    {
+        if (isCreateInventary = true)
+        {
+            isCreateInventary = false;
+            InventorySingleton.Name = string.Empty;
+            InventorySingleton.isPublic = false;
+            InventorySingleton.categoryId = new Guid("00000000-0000-0000-0000-000000000004");
+        }
+
+        if (isEditInventary = true)
+        {
+            isEditInventary = false;
+            InventorySingletonLst.Clear();
+        }
+    }
+
+    private async Task Save(InventoryModel inventory)
+    {
+        isCreateInventary = false;
+        await InventoryService.CreateInventory(inventory);
+        await OnInventorySaved.InvokeAsync();
+
+    }
+    private async Task SaveEdit(List<InventoryModel> inventorys)
+    {
+        isEditInventary = false;
+        foreach (InventoryModel inventory in inventorys)
+        {
+            await InventoryService.EditInventory(inventory);
+        }
+        selectedInventorys.Clear();
+        await OnInventorySaved.InvokeAsync();
+    }
+
+    private async Task Delete()
+    {
+        foreach (InventoryModel inv in selectedInventorys)
+        {
+            await InventoryService.DeleteInventory(inv.Id, inv.userId);
+
+        }
+        selectedInventorys.Clear();
+        await OnInventorySaved.InvokeAsync();
+
+    }
+    private async Task Edit()
+    {
+        isEditInventary = true;
+        InventorySingletonLst = selectedInventorys;
+        await OnInventorySaved.InvokeAsync();
+
+    }
+
+}

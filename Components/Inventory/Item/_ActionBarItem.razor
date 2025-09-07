@@ -1,0 +1,44 @@
+﻿@inject NavigationManager NavigationManager
+
+
+<div class="col d-flex justify-content-end">
+        @if (openEditPanel == true)
+        {
+            <_ButtonSubmit ButtnText="Cancel" ButtnType="btn-danger" OnClick="OnClosePanel" IsDisable="@isDisable" />
+            <_ButtonSubmit ButtnText="Save" ButtnType="btn-success" OnClick="OnSaveEditChange" IsDisable="@isDisable" />
+        }
+        else if (openCreatePanel == true)
+        {
+            <_ButtonSubmit ButtnText="Cancel" ButtnType="btn-danger" OnClick="OnClosePanel" IsDisable="@isDisable" />
+            <_ButtonSubmit ButtnText="Save" ButtnType="btn-success" OnClick="OnSaveChange" IsDisable="@isDisable" />
+        }
+        else
+        {
+
+        <_ButtonSubmit OnClick="OnCreate" ButtnText="Add" ButtnType="btn-success " IsDisable="@isDisable" />
+            <_ButtonSubmit OnClick="OnEdit" ButtnText="Edit" ButtnType="btn-info " IsDisable="@isDisable" />
+            <_ButtonSubmit OnClick="OnDelete" ButtnText="Delete" ButtnType="btn-danger " IsDisable="@isDisable" />
+
+        }
+    </div>
+
+@code {
+    [Parameter]
+    public bool isDisable { get; set; }
+    [Parameter]
+    public bool openCreatePanel { get; set; }
+    [Parameter]
+    public bool openEditPanel { get; set; }
+    [Parameter]
+    public EventCallback OnEdit { get; set; }
+    [Parameter]
+    public EventCallback OnDelete { get; set; }
+    [Parameter]
+    public EventCallback OnCreate { get; set; }
+    [Parameter]
+    public EventCallback OnClosePanel { get; set; }
+    [Parameter]
+    public EventCallback OnSaveChange { get; set; }
+    [Parameter]
+    public EventCallback OnSaveEditChange { get; set; }
+}

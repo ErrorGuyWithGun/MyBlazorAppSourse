@@ -1,0 +1,18 @@
+﻿@using MyBlazorAppSourse.Models
+@inject MyBlazorAppSourse.Services.InventoryService InventoryService
+
+<input @bind=@Item.Title class="form-control form-control-sm  m-1" type="text" placeholder="Title" aria-label=".form-control-sm example">
+<input @bind=@Item.Price class="form-control form-control-sm  m-1" type="text" placeholder="Price" aria-label=".form-control-sm example">
+<div class="m-1 ">
+    <label for="commentText" class="form-label"></label>
+    <textarea @bind=@Item.Description
+              class="form-control"
+              placeholder="Description" id="commentText" rows="3"></textarea>
+</div>
+
+@code {
+    [Parameter]
+    public ItemModel Item { get; set; }
+
+
+}

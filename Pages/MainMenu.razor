@@ -2,16 +2,19 @@
 @inject NavigationManager NavigationManager
 @inject UserService UserService
 @inject CurrentUser currentUser
+@inject InventoryService InventoryService
+@inject InventoryModel InventorySingleton
 @using MyBlazorAppSourse.Services
 @using MyBlazorAppSourse.Models
 @using BlazorApp1.Components
+@using BlazorApp1.Components.Inventory
 
 
 <nav class="navbar fixed-top bg-body-tertiary bg-dark " data-bs-theme="dark">
-    <div class="container-fluid ">
+    <div class="container-fluid justify-content-md-end">
         <AuthorizeView Roles="Admin">
             <Authorized>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <div class="d-grid gap-2 d-md-flex">
                     <_ButtonSubmit 
                         OnClick="UsersList" 
                         ButtnText="Users" 
@@ -19,11 +22,13 @@
                         ButtnType="btn-secondary" />
                 </div>
             </Authorized>
-            <NotAuthorized>
-
-            </NotAuthorized>
         </AuthorizeView>
-        <div class="justify-content-end">
+            <_ButtonSubmit OnClick="PublicInventory"
+                           ButtnText="Public"
+                           Style="me-md-2"
+                           ButtnType="btn-outline-dark btn-primary" />
+        <div>
+
             @if (!string.IsNullOrEmpty(currentUser.Email))
             {
                 <_ButtonSubmit OnClick="LogOut"
@@ -42,27 +47,56 @@
     </div>
 </nav>
 
-<div class="pt-5 ">
-    @if(!string.IsNullOrEmpty(currentUser.Email))
+
+<div class="p-2" style="margin-top: 10vh">
+    @if (!string.IsNullOrEmpty(currentUser.Email))
     {
-        <p>Hello, @currentUser.UserName! You'r Role is @currentUser.Role!'</p>
-       
+        <p>Hello, @currentUser.UserName! Your Role is @currentUser.Role</p>
+
+
     }
     else
     {
         <p>Guest</p>
     }
-</div>
+    @if (currentUser.Role == "Admin")
+    {
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+            <_Inventory Inventorys="allInv" OnInventorySaved="RefreshDataAdmin" />
+        </Authorized>
+    </AuthorizeView>
+    }
+    @if (currentUser.Role == "User")
+    {
+        <AuthorizeView Roles="User">
+            <Authorized>
+            <_Inventory Inventorys="userInv" OnInventorySaved="RefreshData" />
+        </Authorized>
+        <NotAuthorized></NotAuthorized>
+    </AuthorizeView>
+    }
 
+</div>
 
 @code {
 
+    List<InventoryModel> allInv = new List<InventoryModel>();
+    List<InventoryModel> userInv = new List<InventoryModel>();
+    public InventoryModel inventory = new InventoryModel();
+
     protected override async Task OnInitializedAsync()
     {
+        allInv = await InventoryService.LoadAllInventory();
         currentUser = await UserService.GetCurrentUser();
         await UserService.CheckUserStatus(currentUser);
+        userInv = await InventoryService.LoadInventory(currentUser.Id);
+        InventorySingleton.userId = Convert.ToString(currentUser.Id);
 
     }
+
+
+
     private async void LogOut()
     {
         await UserService.logOut();
@@ -73,9 +107,23 @@
     {
         NavigationManager.NavigateTo("https://errorguywithgun.github.io/MyBlazorAppSourse/SignIn");
     }
+    private void PublicInventory()
+    {
+        NavigationManager.NavigateTo("https://errorguywithgun.github.io/MyBlazorAppSourse/PublicInventory");
+    }
 
     private void UsersList()
     {
         NavigationManager.NavigateTo("https://errorguywithgun.github.io/MyBlazorAppSourse/UserList");
     }
+
+    private async Task RefreshData()
+    {
+        userInv = await InventoryService.LoadInventory(currentUser.Id);
+    }
+    private async Task RefreshDataAdmin()
+    {
+        allInv = await InventoryService.LoadAllInventory();
+    }
+
 }

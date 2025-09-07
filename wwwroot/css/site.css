@@ -70,24 +70,5 @@ html, body {
         margin:inherit
     
     }
-    .columText
-    {
 
-    }
-}
-@media (min-width:600px)
-{
-    .tableAdaptiv {
-    
-        width:85vw;
-        
-  
-    }
-    .columText {
-        
-    }
-}
-
-.footer {
-  
 }

@@ -1,0 +1,76 @@
+﻿@inject MyBlazorAppSourse.Services.InventoryService InventoryService
+@inject MyBlazorAppSourse.Services.UserService UserService
+@using MyBlazorAppSourse.Models
+
+<div class="accordion-header">
+    <button class="btn m-3 btn-primary d-grid gap-2 d-md-flex justify-content-md-end"
+            type="button" data-bs-toggle="collapse"
+            data-bs-target="#comments-@InventoryId" aria-expanded="false" aria-controls="comments-@InventoryId">
+        Comments: @(Discussions?.Count ?? 0)
+    </button>
+</div>
+
+<div class="m-3">
+    <div id="comments-@InventoryId" class="accordion-collapse collapse" data-bs-parent="#comments-@InventoryId">
+        <div class="accordion-body">
+            @if (Discussions != null && Discussions.Any())
+            {
+                @foreach (DiscussionModel message in Discussions)
+                {
+                    @if (message != null)
+                    {
+                        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="false">
+                            <div class="toast-header">
+                                <strong class="me-auto">by: <_GetUserNameById UserId="@message.userId" /></strong>
+                            </div>
+                            <div class="toast-body">
+                                <p>@message.Text</p>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+
+            <div class="mb-3">
+                <label for="commentText-@InventoryId" class="form-label"></label>
+                <textarea @bind="NewText" class="form-control"
+                          placeholder="Text your comment!" id="commentText-@InventoryId" rows="3"></textarea>
+                <div class="d-flex justify-content-end m-2">
+                    <button class="btn btn-secondary" @onclick="AddComment">Send</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Guid InventoryId { get; set; }
+
+    private List<DiscussionModel> Discussions { get; set; }
+    private string NewText { get; set; }
+    private CurrentUser currentUser { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        currentUser = await UserService.GetCurrentUser();
+        Discussions = await InventoryService.GetDiscussions(InventoryId) ;
+    }
+
+    private async Task AddComment()
+    {
+
+        DiscussionModel newDiscussion = new DiscussionModel
+            {
+                inventoryId = InventoryId,
+                userId = Convert.ToString(currentUser.Id),
+                Text = NewText,
+                Id = Guid.NewGuid()
+            };
+       
+        await InventoryService.CreateDiscussions(newDiscussion);
+        Discussions = await InventoryService.GetDiscussions(InventoryId) ;
+        
+    }
+}

@@ -3267,9 +3267,7 @@ E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\rjimswa.dswa.cache.json
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
-E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\scopedcss\Layout\NavMenu.razor.rz.scp.css
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\scopedcss\bundle\BlazorApp1.styles.css
-E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\scopedcss\projectbundle\BlazorApp1.bundle.scp.css
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\blazor.build.boot-extension.json
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\blazor.boot.json
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\dw35ekkt6n-mv535bwyet.gz
@@ -3606,5 +3604,5 @@ E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\bin\Debug\net8.0\
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\bin\Debug\net8.0\Microsoft.AspNetCore.Components.Authorization.dll
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.Authorization.wasm
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\3dhpe4bm79-2wcb5q3gi0.gz
-E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\mpnezo3ggr-pcettln8eg.gz
-E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\5jzqasczcu-q1jb1uamtc.gz
+E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\mpnezo3ggr-4yxipfbzbt.gz
+E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\5jzqasczcu-e6dvapf06n.gz

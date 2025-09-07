@@ -1,0 +1,22 @@
+﻿@inject MyBlazorAppSourse.Services.InventoryService InventoryService
+
+<span>Item: @Count</span>
+
+@code {
+    [Parameter]
+    public Guid InventoryId { get; set; }
+
+    private int Count { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var items = await InventoryService.LoadItem(InventoryId);
+        Count = items.Count;
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var items = await InventoryService.LoadItem(InventoryId);
+        Count = items.Count;
+    }
+}

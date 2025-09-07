@@ -1,0 +1,40 @@
+﻿@using MyBlazorAppSourse.Models
+@inject MyBlazorAppSourse.Services.InventoryService InventoryService
+
+
+<div class=" col">
+    <div class="form-check form-switch">
+        <input @bind=Inventory.isPublic class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+        <label class="form-check-label" for="switchCheckDefault">Public You'r Inventory</label>
+    </div>
+    <input @bind=Inventory.Name class="form-control  form-control-lg mb-2" type="text" placeholder="Tittle" aria-label=".form-control-lg example">
+
+    @if (categories == null)
+    {
+        <div>Loading categories...</div>
+    }
+    else
+    {
+        <span>Select Category</span>
+        <select @bind=Inventory.categoryId class="form-select form-select-lg mb-3" aria-label="Large select example">
+            @foreach (CategoryModel category in categories)
+            {
+                <option value=@category.Id>@category.Name</option>
+            }
+        </select>
+    }
+</div>
+
+
+
+@code {
+    [Parameter]
+    public InventoryModel Inventory{ get; set; }
+
+    public List<CategoryModel> categories { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        categories = await InventoryService.GetAllCategory();
+    }
+}
