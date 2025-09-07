@@ -62,10 +62,10 @@ else
                            @onchange="@((e) => ToggleSelection(item, (bool)e.Value))"
                            id="itemCheckbox-@item.Id"
                            hidden="@isHidden" />
-                    <div class="flex-grow-1">
-                        <div class="card card-body mt-1 p-2">
+                    <div class=" d-flex flex-nowrap overflow-auto ">
+                        <div class="card card-body mt-1 p-2 ">
                             <div class="d-flex flex-column text-start">
-                        <div class="d-flex align-items-center mb-3">
+                        <div class=" ">
                             <h5 class="fw-bold me-2 ">@item.Title</h5>
                         </div>
                                 <span><strong>Price:</strong> @item.Price</span>

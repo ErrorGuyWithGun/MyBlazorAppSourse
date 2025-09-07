@@ -3604,5 +3604,5 @@ E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\bin\Debug\net8.0\
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\bin\Debug\net8.0\Microsoft.AspNetCore.Components.Authorization.dll
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\webcil\Microsoft.AspNetCore.Components.Authorization.wasm
 E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\3dhpe4bm79-2wcb5q3gi0.gz
-E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\mpnezo3ggr-4yxipfbzbt.gz
-E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\5jzqasczcu-e6dvapf06n.gz
+E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\mpnezo3ggr-8rlrq6k085.gz
+E:\Data Research\ItransitionStude\task 4\BlazorApp1\BlazorApp1\obj\Debug\net8.0\compressed\5jzqasczcu-y2fkza6qb0.gz
