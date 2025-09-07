@@ -2,34 +2,60 @@
 @inject MyBlazorAppSourse.Services.InventoryService InventoryService
 @inject InventoryModel InventorySingleton
 
+@if (InventorySingleton == null)
+{
 
-<div class=" col">
-    <div class="form-check form-switch">
-        <input @bind=InventorySingleton.isPublic class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-        <label class="form-check-label" for="switchCheckDefault">Public You'r Inventory</label>
-    </div>
-    <input @bind=InventorySingleton.Name class="form-control  form-control-lg mb-2" type="text" placeholder="Tittle" aria-label=".form-control-lg example">
-      
-  
-    <span>Select Category</span>
-    <select @bind=InventorySingleton.categoryId class="form-select form-select-lg mb-3" aria-label="Large select example">
-        @foreach (CategoryModel category in categories)
+}
+else
+{
+    <div class="col">
+        <div class="form-check form-switch">
+            <input @bind="InventorySingleton.isPublic" class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+            <label class="form-check-label" for="switchCheckDefault">Public Your Inventory</label>
+        </div>
+        <input @bind="InventorySingleton.Name" class="form-control form-control-lg mb-2" type="text" placeholder="Title" aria-label=".form-control-lg example">
+
+        @if (categories == null)
         {
-            <option value=@category.Id selected>@category.Name</option>
-        }
-    </select>
-        
- </div>
 
- 
+        }
+        else
+        {
+            <span>Select Category</span>
+            <select @bind="InventorySingleton.categoryId" class="form-select form-select-lg mb-3" aria-label="Large select example">
+                @foreach (CategoryModel category in categories)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </select>
+        }
+    </div>
+}
 
 @code {
     public List<CategoryModel> categories { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
-        InventorySingleton.Name = string.Empty;
-        InventorySingleton.isPublic = false;
+   
+        if (InventorySingleton == null)
+        {
+
+            InventorySingleton = new InventoryModel
+            {
+                Name = string.Empty,
+                isPublic = false,
+                categoryId = new Guid("00000000-0000-0000-0000-000000000004")
+            };
+        }
+        else
+        {
+            
+            InventorySingleton.Name = string.Empty;
+            InventorySingleton.isPublic = false;
+            InventorySingleton.categoryId = new Guid("00000000-0000-0000-0000-000000000004");
+        }
+
         categories = await InventoryService.GetAllCategory();
     }
 }
