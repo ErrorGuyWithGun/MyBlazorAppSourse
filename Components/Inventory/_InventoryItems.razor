@@ -24,8 +24,10 @@ else
         </div>
     </div>
     <div class="collapse" id="collapse-items-@inventoryId">
-                                    <div class="card card-body">
-   <_ActionBarItem openCreatePanel="isAddItem"
+                                    <div class="z card-body">
+
+            @if (isHidden == false) { 
+            <_ActionBarItem openCreatePanel="isAddItem"
                     OnCreate="AddItem"
                     OnSaveChange="@(()=> Save(ItemSingleton))"
                     openEditPanel ="@isEditItem"
@@ -34,7 +36,10 @@ else
                     OnEdit="Edit"
                     OnSaveEditChange="@(()=> SaveEdit(ItemSingletonList))"
                     />
+            }
     <div class="d-grid">
+
+
     @if(isAddItem == true)
     {
         <_AddItem inventoryId="inventoryId"/>
@@ -79,6 +84,7 @@ else
 
     [Parameter]
     public Guid inventoryId { get; set; }
+
     [Parameter]
     public bool isHidden { get; set; }
 
