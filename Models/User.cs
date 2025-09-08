@@ -1,5 +1,3 @@
-using System;
-
 namespace MyBlazorAppSourse.Models
 {
     public class User : EditModel

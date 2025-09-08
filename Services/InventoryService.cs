@@ -12,9 +12,9 @@ namespace MyBlazorAppSourse.Services
         public InventoryService(HttpClient httpClient)
         { this._httpClient = httpClient; }
 
-        public async Task<List<InventoryModel>> LoadPublicInventory()
+        public async Task<List<InventoryModel>> LoadPublicInventory(string searchTerm = null, string sortBy = null)
         {
-            var response = await _httpClient.GetAsync("api/Inventory/GetPublicInventory");
+            var response = await _httpClient.GetAsync($"api/Inventory/GetPublicInventory?searchTerm={searchTerm}&sortBy={sortBy}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -26,9 +26,9 @@ namespace MyBlazorAppSourse.Services
             return new List<InventoryModel>();
         }
 
-        public async Task<List<InventoryModel>> LoadInventory(Guid userId)
+        public async Task<List<InventoryModel>> LoadInventory(Guid userId, string searchTerm = null, string sortBy = null)
         {
-            var response = await _httpClient.GetAsync($"api/Inventory/{userId}");
+            var response = await _httpClient.GetAsync($"api/Inventory/{userId}?searchTerm={searchTerm}f&sortBy={sortBy}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -107,9 +107,9 @@ namespace MyBlazorAppSourse.Services
             return false;
         }
 
-        public async Task<List<InventoryModel>> LoadAllInventory()
+        public async Task<List<InventoryModel>> LoadAllInventory(string searchTerm = null, string sortBy = null)
         {
-            var response = await _httpClient.GetAsync("api/Inventory/GetAllInventory");
+            var response = await _httpClient.GetAsync($"api/Inventory/GetAllInventory?searchTerm={searchTerm}&sortBy={sortBy}");
 
             if (response.IsSuccessStatusCode)
             {

@@ -30,16 +30,17 @@
                     }
                 }
             }
-
-            <div class="mb-3">
-                <label for="commentText-@InventoryId" class="form-label"></label>
+            @if (isHidden == false)
+            {
+                <div class="mb-3">
+                    <label for="commentText-@InventoryId" class="form-label"></label>
                 <textarea @bind="NewText" class="form-control"
                           placeholder="Text your comment!" id="commentText-@InventoryId" rows="3"></textarea>
                 <div class="d-flex justify-content-end m-2">
                     <button class="btn btn-secondary" @onclick="AddComment">Send</button>
                 </div>
             </div>
-
+            }
         </div>
     </div>
 </div>
@@ -47,6 +48,9 @@
 @code {
     [Parameter]
     public Guid InventoryId { get; set; }
+
+    [Parameter]
+    public bool isHidden { get; set; } = false;
 
     private List<DiscussionModel> Discussions { get; set; }
     private string NewText { get; set; }

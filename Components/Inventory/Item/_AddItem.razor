@@ -4,7 +4,6 @@
 @inject ItemModel ItemSingleton
 
 <EditForm Model="@ItemSingleton">
-    <DataAnnotationsValidator />
 
     <InputText @bind-Value="@ItemSingleton.Title"
                maxlength="@maxLength"

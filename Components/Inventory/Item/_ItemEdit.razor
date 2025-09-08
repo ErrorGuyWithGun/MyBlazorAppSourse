@@ -2,7 +2,6 @@
 @inject MyBlazorAppSourse.Services.InventoryService InventoryService
 
 <EditForm Model="@Item">
-    <DataAnnotationsValidator />
 
     <InputText @bind-Value="@Item.Title"
                maxlength="@maxLength"

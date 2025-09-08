@@ -15,7 +15,7 @@
                 <h3>Sign Up!</h3>
             </div>
             <EditForm Model="newUser" OnValidSubmit="Register">
-                <_NameInput @bind-Value="newUser.Name" IsDisable="@isDisable" OnFocus="ClearError"/>
+                <_NameInput @bind-Value="newUser.Name"  IsDisable="@isDisable" OnFocus="ClearError"/>
                 <_EmailInput @bind-Value="newUser.Email" IsDisable="@isDisable" OnFocus="ClearError" />
                 <_PasswordInput @bind-Value="newUser.Password" plaseholder="Password" IsDisable="@isDisable" OnFocus="ClearError" />
                 <_Error Error="@error" ErrorStyle="@errorStyle"/>

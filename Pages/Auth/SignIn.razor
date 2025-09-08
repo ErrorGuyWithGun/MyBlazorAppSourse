@@ -12,8 +12,15 @@
         <div id="pictures" class="last"></div>
         <div id="contactform" class="column half">
             <_Title/>
-            <_EmailInput @bind-Value="loginModel.Email" IsDisable="@isDisable" OnFocus="ClearError" />
-            <_PasswordInput @bind-Value="loginModel.Password" plaseholder="Password" IsDisable="@isDisable" OnFocus="ClearError" />
+            <_EmailInput @bind-Value="loginModel.Email"
+                 
+                        IsDisable="@isDisable"
+                        OnFocus="ClearError" />
+            <_PasswordInput @bind-Value="loginModel.Password"
+                        
+                        plaseholder="Password" 
+                        IsDisable="@isDisable" 
+                        OnFocus="ClearError" />
             <_Error Error="@error" ErrorStyle="@errorStyle" />
             <_RememberMeCheckbox/>
             <_ButtonSubmit OnClick="HandelLogic" ButtnText="Submit" ButtnType="btn-primary" IsDisable="@isDisable" />
@@ -30,6 +37,7 @@
     private string error = string.Empty;
     private bool isDisable;
     private string? errorStyle = string.Empty;
+   
 
     private LoginModel loginModel = new LoginModel();
     private async Task HandelLogic()
@@ -38,14 +46,14 @@
         if (userExist)
         {
             isDisable = true;
-            var authStateProvider = (UserService)AuthenticationStateProvider;
-            var result = await authStateProvider.Login(loginModel);
+            var result = await UserService.Login(loginModel);
 
             if (result == true)
             {
                 error = string.Empty;
                 errorStyle = string.Empty;
                 isDisable = false;
+                await AuthenticationStateProvider.GetAuthenticationStateAsync();
                 NavigationManager.NavigateTo("https://errorguywithgun.github.io/MyBlazorAppSourse/");
             }
             else

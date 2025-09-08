@@ -4,6 +4,7 @@
         type="text"
         @onchange="ChangeValue"
         @onfocus="OnFocusHandle"
+           maxlength="@maxlength"
         value="@Value"
         disabled="@IsDisable"
         class="form-control" 
@@ -20,6 +21,7 @@
 
 
 @code {
+    private const int maxlength = 255;
     [Parameter]
     public string? Value { get; set; }
     [Parameter]

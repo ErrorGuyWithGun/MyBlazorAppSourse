@@ -4,6 +4,7 @@
         @onchange="ChangeValue"
         value="@Value"
         @onfocus="OnFocusHandel"
+           maxlength="@maxlength"
            disabled="@IsDisable"
         class="form-control" 
         placeholder="Email" 
@@ -19,6 +20,7 @@
 
 
 @code {
+    private const int maxlength = 255;
     [Parameter]
     public string? Value { get; set; }
 

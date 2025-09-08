@@ -8,8 +8,26 @@
 @using BlazorApp1.Components.Inventory
 @using BlazorApp1.Components
 
-<div class="nav justify-content-xxl-start"> 
+<div class="nav justify-content-center navbar navbar-expand-lg bg-body-tertiary list-group-item-danger">
+    <div class="container-fluid">
     <_ButtonSubmit OnClick="Return" ButtnText="Back to menu" ButtnType="btn-primary"  />
+        <div class="d-flex flex-grow-1 justify-content-center">
+        <form class="d-flex " role="search">
+                <input @bind=@Search
+                       @oninput="async (e) => { Search = e.Value?.ToString(); await UpdateInventory(); }"
+                       class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+            <label class="m-2">SortBy: </label>
+         
+                <select value=@SortBy 
+                    @onchange="async (e) => { SortBy = e.Value?.ToString(); await UpdateInventory(); }"
+                    class="form-select me-2"  aria-label="Large select example">
+                    <option value="Name">Name</option>
+                    <option value="categoryId">Category</option>
+                    <option value="userId">User</option>
+                </select>
+        </form>
+        </div>
+    </div>
 </div>
 <div class="container text-center w-75">
 @if (publicInv != null)
@@ -22,23 +40,24 @@
 
 @code {
     List<InventoryModel> publicInv;
-
+    private string SortBy { get; set; } = "Name";
+    private string? Search { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        try
-        {
-            publicInv = await InventoryService.LoadPublicInventory();
+
+            publicInv = await InventoryService.LoadPublicInventory(Search,SortBy);
             await UserService.CheckUserStatus(currentUser);
-        }
-        catch (Exception ex)
-        {
-            // Handle error
-            Console.WriteLine($"Error loading public inventories: {ex.Message}");
-        }
+
     }
 
     private void Return()
     {
         NavigationManager.NavigateTo("https://errorguywithgun.github.io/MyBlazorAppSourse/");
+    }
+
+    private async Task UpdateInventory()
+    {
+        publicInv = await InventoryService.LoadPublicInventory(Search, SortBy);
+        StateHasChanged();
     }
 }

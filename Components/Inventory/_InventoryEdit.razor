@@ -4,10 +4,10 @@
 
 <div class=" col">
     <div class="form-check form-switch">
-        <input @bind=Inventory.isPublic class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+        <input @bind=Inventory.isPublic  class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
         <label class="form-check-label" for="switchCheckDefault">Public You'r Inventory</label>
     </div>
-    <input @bind=Inventory.Name class="form-control  form-control-lg mb-2" type="text" placeholder="Tittle" aria-label=".form-control-lg example">
+    <input @bind=Inventory.Name maxlength="@maxlength" class="form-control  form-control-lg mb-2" type="text" placeholder="Tittle" aria-label=".form-control-lg example">
 
     @if (categories == null)
     {
@@ -30,6 +30,7 @@
 @code {
     [Parameter]
     public InventoryModel Inventory{ get; set; }
+    private const int maxlength = 255;
 
     public List<CategoryModel> categories { get; set; }
 

@@ -18,8 +18,8 @@ namespace MyBlazorAppSourse.Services
         private readonly ILocalStorageService _localStorage;
         private readonly NavigationManager _navigationManager;
         public UserService(
-            HttpClient httpClient, 
-            ILocalStorageService localStorage, 
+            HttpClient httpClient,
+            ILocalStorageService localStorage,
             NavigationManager navigationManager)
         {
             _httpClient = httpClient;
@@ -36,7 +36,7 @@ namespace MyBlazorAppSourse.Services
 
             if (string.IsNullOrEmpty(token) || expiration < DateTime.UtcNow)
             {
-              
+
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
 
@@ -49,7 +49,7 @@ namespace MyBlazorAppSourse.Services
                 new(ClaimTypes.Role, roles)
             };
 
-       
+
             var identity = new ClaimsIdentity(claims, "Token");
             var user = new ClaimsPrincipal(identity);
 
@@ -68,7 +68,7 @@ namespace MyBlazorAppSourse.Services
                 var token = root.GetProperty("token").GetString();
                 var expiration = root.GetProperty("expiration").GetDateTime();
                 string roles = root.GetProperty("role").GetString();
-            
+
                 await _localStorage.SetItemAsync("authToken", token);
                 await _localStorage.SetItemAsync("tokenExpiration", expiration);
                 await _localStorage.SetItemAsync("userEmail", loginModel.Email);
@@ -83,12 +83,12 @@ namespace MyBlazorAppSourse.Services
         }
 
 
-        public async Task<bool> Register(RegisterUser registerUser) 
+        public async Task<bool> Register(RegisterUser registerUser)
         {
             var response = await _httpClient.PostAsJsonAsync($"api/Authentication?role=User", registerUser);
             if (response.IsSuccessStatusCode)
             {
-               
+
                 return true;
             }
             return false;
@@ -97,21 +97,22 @@ namespace MyBlazorAppSourse.Services
         public async Task<CurrentUser> GetCurrentUser()
         {
             string email = await _localStorage.GetItemAsync<string>("userEmail");
-            if (email != null) 
-            { 
+            if (email != null)
+            {
                 var user = await _httpClient.GetFromJsonAsync<CurrentUser>($"api/Authentication/email/{email}");
                 return new CurrentUser
-                {   Id = user.Id,
+                {
+                    Id = user.Id,
                     UserName = user.UserName,
                     Email = user.Email,
                     IsActive = user.IsActive,
                     Role = await _localStorage.GetItemAsync<string>("userRoles"),
                     Token = await _localStorage.GetItemAsync<string>("authToken"),
                     Expiration = await _localStorage.GetItemAsync<DateTime>("tokenExpiration")
-                }; 
-            }   
-            else 
-             return new CurrentUser(); 
+                };
+            }
+            else
+                return new CurrentUser();
         }
 
         public async Task logOut()
@@ -126,7 +127,7 @@ namespace MyBlazorAppSourse.Services
 
         public async Task<bool> ForgotPassword(string Email)
         {
-            
+
             var response = await _httpClient.PostAsJsonAsync("api/Authentication/ForgotPassword", Email);
             if (response.IsSuccessStatusCode)
             {
@@ -135,16 +136,16 @@ namespace MyBlazorAppSourse.Services
             return false;
 
         }
-        public async Task<bool> ResetPassword(ResetPasswordModel resetPassword) 
+        public async Task<bool> ResetPassword(ResetPasswordModel resetPassword)
         {
             var response = await _httpClient.PostAsJsonAsync("api/Authentication/ResetPassword", resetPassword);
-            if (response.IsSuccessStatusCode) 
+            if (response.IsSuccessStatusCode)
             {
                 return true;
             }
             return false;
         }
-        public async Task<bool> GetIfUserExist(string email) 
+        public async Task<bool> GetIfUserExist(string email)
         {
             var responseMessage = await _httpClient.GetAsync($"api/Authentication/email/{email}");
             if (responseMessage.IsSuccessStatusCode)
@@ -153,7 +154,7 @@ namespace MyBlazorAppSourse.Services
             }
             return false;
         }
-        public async Task<bool> GetIfNameExist(string username) 
+        public async Task<bool> GetIfNameExist(string username)
         {
             var responseMessage = await _httpClient.GetAsync($"api/Authentication/name/{username}");
             if (responseMessage.IsSuccessStatusCode)
@@ -162,7 +163,7 @@ namespace MyBlazorAppSourse.Services
             }
             return false;
         }
-        public async Task<UserDTOModel> GetIfIdExist(string id) 
+        public async Task<UserDTOModel> GetIfIdExist(string id)
         {
             var responseMessage = await _httpClient.GetAsync($"api/Authentication/id/{id}");
             if (responseMessage.IsSuccessStatusCode)

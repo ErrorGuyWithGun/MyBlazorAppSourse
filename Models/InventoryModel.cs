@@ -7,7 +7,7 @@
         public string? Name { get; set; }
 
         public Guid categoryId { get; set; }
-        public bool? isPublic { get; set; }
+        public bool isPublic { get; set; }
         public bool isSelected { get; set; }
     }
 }

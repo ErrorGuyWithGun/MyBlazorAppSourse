@@ -9,7 +9,7 @@
 @using BlazorApp1.Components
 @using BlazorApp1.Components.Inventory
 
-
+<CascadingAuthenticationState>
 <nav class="navbar fixed-top bg-body-tertiary bg-dark " data-bs-theme="dark">
     <div class="container-fluid justify-content-md-end">
         <AuthorizeView Roles="Admin">
@@ -76,8 +76,8 @@
         <NotAuthorized></NotAuthorized>
     </AuthorizeView>
     }
-
 </div>
+</CascadingAuthenticationState>
 
 @code {
 

@@ -154,58 +154,75 @@
 
     private async Task Edit()
     {
-        User? selectedUser = users.FirstOrDefault(u => u.IsSelected);
+        User selectedUser = users.FirstOrDefault(u => u.IsSelected);
         if (selectedUser != null) {
             openEditPanel = true;
         }
+       
     }
 
     private async Task Block()
     {
-        isDisable = true;
-        if(selectedUsers.Count != 0) {
-            foreach (var u in selectedUsers)
+        User selectedUser = users.FirstOrDefault(u => u.IsSelected);
+        if (selectedUser != null)
+        {
+            isDisable = true;
+            if (selectedUsers.Count != 0)
             {
-                u.IsActive = false;
-                await AdminService.EditUser(u);
-            }
-            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
-        }
+                foreach (var u in selectedUsers)
+                {
+                    u.IsActive = false;
+                    await AdminService.EditUser(u);
+                }
 
+            }
+        }
+        isDisable = false;
+   
     }
 
     private async Task Unblock()
     {
-        isDisable = true;
-        if (selectedUsers.Count != 0)
-        {
-            foreach (var u in selectedUsers)
+        User selectedUser = users.FirstOrDefault(u => u.IsSelected);
+        if (selectedUser != null){
+            isDisable = true;
+            if (selectedUsers.Count != 0)
             {
-                u.IsActive = true;
-                await AdminService.EditUser(u);
-            }
-            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
-        }
+                foreach (var u in selectedUsers)
+                {
+                    u.IsActive = true;
+                    await AdminService.EditUser(u);
+                }
 
+            }
+        }
+        isDisable = false;
+       
     }
 
     private async Task Delete()
     {
-        isDisable = true;
-        if (selectedUsers.Count != 0)
+        User selectedUser = users.FirstOrDefault(u => u.IsSelected);
+        if (selectedUser != null)
         {
-            foreach (var u in selectedUsers)
+            isDisable = true;
+            if (selectedUsers.Count != 0)
             {
-                await AdminService.DeleteUser(u.Email);
-            }
-            NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
-        }
+                foreach (var u in selectedUsers)
+                {
+                    await AdminService.DeleteUser(u.Email);
+                }
 
+            }
+        }
+        isDisable = false;
+        selectedUsers.Clear();
     }
 
     private async Task ClosePanel()
     {
         userEdit.Clear();
+        isDisable = false;
         openEditPanel = false;
     }
 
@@ -217,7 +234,8 @@
             await AdminService.EditUser(u);
         }
         openEditPanel = false;
-        NavigationManager.NavigateTo(NavigationManager.Uri, forceLoad: true);
+        isDisable = false;
+      
 
     }
 }
