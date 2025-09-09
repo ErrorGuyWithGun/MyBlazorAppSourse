@@ -12,8 +12,8 @@
 else
 {
     <div class="row">
-        <div class="col">
-            <button class="btn btn-primary mb-2 d-grid gap-2 d-md-flex justify-content-md-end"
+        <div class="d-flex align-items-center flex-wrap">
+            <button class="btn btn-primary "
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#collapse-items-@inventoryId"
@@ -21,11 +21,6 @@ else
                     aria-controls="collapse-items-@inventoryId">
                 <p> Item: @(Items?.Count ?? 0)</p>
             </button>
-        </div>
-    </div>
-    <div class="collapse" id="collapse-items-@inventoryId">
-                                    <div class="z card-body">
-
             @if (isHidden == false) { 
             <_ActionBarItem openCreatePanel="isAddItem"
                     OnCreate="AddItem"
@@ -37,6 +32,11 @@ else
                     OnSaveEditChange="@(()=> SaveEdit(ItemSingletonList))"
                     />
             }
+        </div>
+    </div>
+    <div class="collapse" id="collapse-items-@inventoryId">
+                                    <div class="z card-body">
+
     <div class="d-grid">
 
 

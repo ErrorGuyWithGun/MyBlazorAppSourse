@@ -72,3 +72,17 @@ html, body {
     }
 
 }
+
+btn-md-lg {
+
+    padding: 1rem 1rem;
+    font-size: 2rem;
+}
+
+@media (max-width: 768px) {
+    .btn-md-lg {
+ 
+        padding: 0.1rem 0.1rem;
+        font-size: 0.1rem;
+    }
+}

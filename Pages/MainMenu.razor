@@ -10,76 +10,88 @@
 @using BlazorApp1.Components.Inventory
 
 <CascadingAuthenticationState>
-<nav class="navbar fixed-top bg-body-tertiary bg-dark " data-bs-theme="dark">
-    <div class="container-fluid justify-content-md-end">
-        <AuthorizeView Roles="Admin">
-            <Authorized>
-                <div class="d-grid gap-2 d-md-flex">
-                    <_ButtonSubmit 
-                        OnClick="UsersList" 
-                        ButtnText="Users" 
-                        Style="me-md-2" 
-                        ButtnType="btn-secondary" />
-                </div>
-            </Authorized>
-        </AuthorizeView>
+    <nav class="navbar fixed-top bg-body-tertiary bg-dark" data-bs-theme="dark">
+        <div class="d-flex">
+            <AuthorizeView Roles="Admin">
+                <Authorized>
+                    <_ButtonSubmit OnClick="UsersList"
+                                    ButtnText="Users"
+                                    Style="me-md-2"
+                                    ButtnType="btn-secondary" />
+                </Authorized>
+            </AuthorizeView>
+        
             <_ButtonSubmit OnClick="PublicInventory"
                            ButtnText="Public"
                            Style="me-md-2"
                            ButtnType="btn-outline-dark btn-primary" />
-        <div>
+            </div>
+                <AuthorizeView >
+                    <Authorized Context="authContext">
+                        <div class=" d-flex flex-grow-1 justify-content-center">
+                        @if (authContext.User.IsInRole("Admin"))
+                        {
+                                <_Search Search="@Search"
+                                         SortBy="@SortBy"
+                                         SearchChanged="@(async (value) => { Search = value; await UpdateInventoryAdmin(); })"
+                                         SortByChanged="@(async (value) => { SortBy = value; await UpdateInventoryAdmin(); })" />
+                        }
+                        else if (authContext.User.IsInRole("User"))
+                        {
+                                <_Search Search="@Search"
+                                         SortBy="@SortBy"
+                                         SearchChanged="@(async (value) => { Search = value; await UpdateInventoryUser(); })"
+                                         SortByChanged="@(async (value) => { SortBy = value; await UpdateInventoryUser(); })" />
+                        }
+                            </div>
+                <div class="position-fixed top-0 end-0 mt-2 me-2">
 
-            @if (!string.IsNullOrEmpty(currentUser.Email))
-            {
-                <_ButtonSubmit OnClick="LogOut"
-                ButtnText="LogOut"
-                Style="me-md-2"
-                ButtnType="btn-outline-dark btn-primary" />
-            }
-            else
-            {
-                <_ButtonSubmit OnClick="SignIn" 
-                ButtnText="Sign In" 
-                Style="me-md-2" 
-                ButtnType="btn-outline-dark btn-primary" />
-            }
-        </div>
+                            <_ButtonSubmit OnClick="LogOut"
+                                           ButtnText="LogOut"
+                                            Style="me-md-2"
+                                           ButtnType="btn-outline-dark btn-primary " />
+                        </div>
+                    </Authorized>
+                    <NotAuthorized>
+                           <div class="position-fixed top-0 end-0 mt-2 me-2">
+                        <_ButtonSubmit OnClick="SignIn"
+                                       ButtnText="Sign In"
+                                       Style="me-md-2"
+                                       ButtnType="btn-outline-dark btn-primary" />
+                                       </div>
+                    </NotAuthorized>
+                </AuthorizeView>
+    </nav>
+
+    <div class="p-2" style="margin-top: 10vh">
+        <AuthorizeView>
+            <Authorized Context="authContext">
+                <p>Hello, @authContext.User.Identity.Name! </p>
+            </Authorized>
+            <NotAuthorized>
+                <p>Guest</p>
+            </NotAuthorized>
+        </AuthorizeView>
+
+        <AuthorizeView Roles="Admin,User">
+            <Authorized Context="authContext">
+                @if (authContext.User.IsInRole("Admin"))
+                {
+                    <_Inventory Inventorys="allInv" OnInventorySaved="RefreshDataAdmin" />
+                }
+                else if (authContext.User.IsInRole("User"))
+                {
+                    <_Inventory Inventorys="userInv" OnInventorySaved="RefreshData" />
+                }
+            </Authorized>
+        </AuthorizeView>
     </div>
-</nav>
-
-
-<div class="p-2" style="margin-top: 10vh">
-    @if (!string.IsNullOrEmpty(currentUser.Email))
-    {
-        <p>Hello, @currentUser.UserName! Your Role is @currentUser.Role</p>
-
-
-    }
-    else
-    {
-        <p>Guest</p>
-    }
-    @if (currentUser.Role == "Admin")
-    {
-        <AuthorizeView Roles="Admin">
-            <Authorized>
-            <_Inventory Inventorys="allInv" OnInventorySaved="RefreshDataAdmin" />
-        </Authorized>
-    </AuthorizeView>
-    }
-    @if (currentUser.Role == "User")
-    {
-        <AuthorizeView Roles="User">
-            <Authorized>
-            <_Inventory Inventorys="userInv" OnInventorySaved="RefreshData" />
-        </Authorized>
-        <NotAuthorized></NotAuthorized>
-    </AuthorizeView>
-    }
-</div>
 </CascadingAuthenticationState>
 
 @code {
+
+    private string SortBy { get; set; } = "Name";
+    private string? Search { get; set; }
 
     List<InventoryModel> allInv = new List<InventoryModel>();
     List<InventoryModel> userInv = new List<InventoryModel>();
@@ -92,7 +104,7 @@
         await UserService.CheckUserStatus(currentUser);
         userInv = await InventoryService.LoadInventory(currentUser.Id);
         InventorySingleton.userId = Convert.ToString(currentUser.Id);
-
+  
     }
 
 
@@ -124,6 +136,17 @@
     private async Task RefreshDataAdmin()
     {
         allInv = await InventoryService.LoadAllInventory();
+    }
+
+    private async Task UpdateInventoryUser()
+    {
+        userInv = await InventoryService.LoadInventory(currentUser.Id, Search, SortBy);
+        StateHasChanged();
+    }
+    private async Task UpdateInventoryAdmin()
+    {
+        allInv = await InventoryService.LoadAllInventory(Search, SortBy);
+        StateHasChanged();
     }
 
 }

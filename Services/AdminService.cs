@@ -13,32 +13,22 @@ namespace MyBlazorAppSourse.Services
         public AdminService(HttpClient httpClient) {  _httpClient = httpClient; }
         public async Task<List<User>> LoadAllUsers()
         {
-            var response = await _httpClient.GetAsync("api/Admin/GetAllUser");
-            
-            if (response.IsSuccessStatusCode)
+            var response = await _httpClient.GetFromJsonAsync<List<User>>("api/Admin/GetAllUser");
+
+            if (response != null)
             {
-                
-                var content = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-                return JsonSerializer.Deserialize<List<User>>(content, options);
+
+                return response;
             }
             return new List<User>();
         }
 
         public async Task<List<User>> LoadUsers(int startIndex, int endIndex)
         {
-            var response = await _httpClient.GetAsync($"api/Admin/GetUser?startIndex={startIndex}&endIndex={endIndex}");
-            if(response.IsSuccessStatusCode)
+            var response = await _httpClient.GetFromJsonAsync<List<User>>($"api/Admin/GetUser?startIndex={startIndex}&endIndex={endIndex}");
+            if(response != null)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                var options = new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                };
-                return JsonSerializer.Deserialize<List<User>>(content, options);
+                return response;
             }
             return new List<User>();
         }

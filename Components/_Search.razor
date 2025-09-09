@@ -1,0 +1,45 @@
+﻿<div class="d-flex flex-grow-1 justify-content-center">
+    <form class="d-flex" role="search">
+        <input value="@Search"
+               @oninput="SearchInputHandler"
+               class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+        <label class="m-2 text-white">SortBy: </label>
+
+        <select value="@SortBy"
+                @onchange="SortByChangedHandler"
+                class="form-select me-2" aria-label="Large select example">
+            <option value="Name">Name</option>
+            <option value="categoryId">Category</option>
+            <option value="userId">User</option>
+        </select>
+    </form>
+</div>
+
+@code {
+    [Parameter]
+    public string SortBy { get; set; } = "Name";
+    [Parameter]
+    public EventCallback<string> SortByChanged { get; set; }
+
+    [Parameter]
+    public string? Search { get; set; }
+    [Parameter]
+    public EventCallback<string> SearchChanged { get; set; }
+
+    [Parameter]
+    public EventCallback UpdateInventory { get; set; }
+
+    private async Task SearchInputHandler(ChangeEventArgs e)
+    {
+        Search = e.Value?.ToString();
+        await SearchChanged.InvokeAsync(Search);
+        await UpdateInventory.InvokeAsync();
+    }
+
+    private async Task SortByChangedHandler(ChangeEventArgs e)
+    {
+        SortBy = e.Value?.ToString();
+        await SortByChanged.InvokeAsync(SortBy);
+        await UpdateInventory.InvokeAsync();
+    }
+}

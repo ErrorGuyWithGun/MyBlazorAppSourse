@@ -74,6 +74,7 @@ namespace MyBlazorAppSourse.Services
                 await _localStorage.SetItemAsync("userEmail", loginModel.Email);
                 await _localStorage.SetItemAsync("userRoles", roles);
 
+                
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());

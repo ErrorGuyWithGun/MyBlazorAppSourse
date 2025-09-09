@@ -1,11 +1,12 @@
 ﻿
-<div class="d-grid gap-2 p-2">
+<div class="d-grid gap-2 p-2 ">
     <button 
         type="submit"
-            class="btn @ButtnType @Style"
+            class="btn-md-lg btn @ButtnType @Style"
             disabled ="@IsDisable"
             @onclick = "HandleClick" >@ButtnText</button>
 </div>
+
 
 @code {
     [Parameter]
@@ -29,3 +30,4 @@
         await OnClick.InvokeAsync();
     }
 }
+
