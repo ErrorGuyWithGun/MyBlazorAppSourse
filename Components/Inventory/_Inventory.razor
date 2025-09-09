@@ -10,10 +10,13 @@
                      OnSaveChange="@(() => Save(InventorySingleton))"
                      OnSaveEditChange="@(() => SaveEdit(InventorySingletonLst))"
                      openCreatePanel="isCreateInventary"
+                     openShareinventory="isShareInventory"
                      openEditPanel="isEditInventary"
                      OnDelete="Delete"
                      OnEdit="Edit"
-                    />
+                     OnShare="Share" 
+                         OnCloseShare="CloseShare"
+                         OnSaveShare="SaveShare" />
     }
 
 
@@ -33,7 +36,10 @@
 
             }
         }
-
+        @if(isShareInventory == true)
+        {
+            
+        }
         @foreach (InventoryModel inventory in Inventorys)
         {
             if (inventory != null)
@@ -59,6 +65,7 @@
                                 </p>
                             </button>
                         </h2>
+
                         <div id="@inventory.Id" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <_InventoryItems  inventoryId="inventory.Id" isHidden="isHidden" OnInventorySaved="OnInventorySaved" />
@@ -88,6 +95,7 @@
 
     private bool isCreateInventary { get; set; } = false;
     private bool isEditInventary { get; set; } = false;
+    private bool isShareInventory { get; set; } = false;
     private bool isAddItem { get; set; } = false;
     private string error = string.Empty;
     private Dictionary<string, string> userNames = new Dictionary<string, string>();
@@ -183,5 +191,20 @@
         await OnInventorySaved.InvokeAsync();
 
     }
+    private async Task Share()
+    {
+        isShareInventory = true;
+    }
 
+
+    private async Task SaveShare()
+    {
+        isShareInventory = false;
+
+    }
+    private async Task CloseShare()
+    {
+        isShareInventory = false;
+
+    }
 }

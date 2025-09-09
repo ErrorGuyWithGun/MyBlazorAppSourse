@@ -13,11 +13,17 @@
             <_ButtonSubmit ButtnText="Cancel ❌️	" ButtnType="btn-danger" OnClick="OnClosePanel" IsDisable="@isDisable" />
             <_ButtonSubmit ButtnText="Save ✔️" ButtnType="btn-success" OnClick="OnSaveChange" IsDisable="@isDisable" />
         }
+        else if (openShareinventory == true)
+        {
+            <_ButtonSubmit ButtnText="Cancel ❌️	" ButtnType="btn-danger" OnClick="OnCloseShare" IsDisable="@isDisable" />
+            <_ButtonSubmit ButtnText="Save ✔️" ButtnType="btn-success" OnClick="OnSaveShare" IsDisable="@isDisable" />
+        }
         else{
             
             <_ButtonSubmit OnClick="OnCreate" ButtnText="Create Inventory" ButtnType="btn-success " IsDisable="@isDisable" />
             <_ButtonSubmit OnClick="OnEdit" ButtnText="Edit 🖊️" ButtnType="btn-info " IsDisable="@isDisable" />
             <_ButtonSubmit OnClick="OnDelete" ButtnText="Delete 🔥" ButtnType="btn-danger " IsDisable="@isDisable" />
+            <_ButtonSubmit OnClick="OnShare" ButtnText="Share" ButtnType="btn-info " IsDisable="@isDisable" />
 
         }
     </div>
@@ -30,6 +36,8 @@
     [Parameter]
     public bool openEditPanel{ get; set; }
     [Parameter]
+    public bool openShareinventory { get; set; }
+    [Parameter]
     public EventCallback OnEdit { get; set; }
     [Parameter]
     public EventCallback OnDelete { get; set; }
@@ -38,7 +46,13 @@
     [Parameter]
     public EventCallback OnClosePanel { get; set; }
     [Parameter]
+    public EventCallback OnCloseShare { get; set; }
+    [Parameter]
     public EventCallback OnSaveChange { get; set; }
     [Parameter]
     public EventCallback OnSaveEditChange { get; set; }
+    [Parameter]
+    public EventCallback OnSaveShare { get; set; }
+    [Parameter]
+    public EventCallback OnShare { get; set; }
 }

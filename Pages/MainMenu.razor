@@ -99,8 +99,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        allInv = await InventoryService.LoadAllInventory();
         currentUser = await UserService.GetCurrentUser();
+        allInv = await InventoryService.LoadAllInventory();
         await UserService.CheckUserStatus(currentUser);
         userInv = await InventoryService.LoadInventory(currentUser.Id);
         InventorySingleton.userId = Convert.ToString(currentUser.Id);

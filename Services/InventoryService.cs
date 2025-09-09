@@ -10,17 +10,15 @@ namespace MyBlazorAppSourse.Services
         private readonly HttpClient _httpClient;
 
         public InventoryService(HttpClient httpClient)
-        { this._httpClient = httpClient; }
+        {_httpClient = httpClient; }
 
         public async Task<List<InventoryModel>> LoadPublicInventory(string searchTerm = null, string sortBy = null)
         {
-            var response = await _httpClient.GetAsync($"api/Inventory/GetPublicInventory?searchTerm={searchTerm}&sortBy={sortBy}");
+            var response = await _httpClient.GetFromJsonAsync<List<InventoryModel>>($"api/Inventory/GetPublicInventory?searchTerm={searchTerm}&sortBy={sortBy}");
 
-            if (response.IsSuccessStatusCode)
+            if (response != null)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<InventoryModel>>(content,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return response;
 
             }
             return new List<InventoryModel>();
@@ -28,13 +26,11 @@ namespace MyBlazorAppSourse.Services
 
         public async Task<List<InventoryModel>> LoadInventory(Guid userId, string searchTerm = null, string sortBy = null)
         {
-            var response = await _httpClient.GetAsync($"api/Inventory/{userId}?searchTerm={searchTerm}f&sortBy={sortBy}");
+            var response = await _httpClient.GetFromJsonAsync<List<InventoryModel>>($"api/Inventory/{userId}?searchTerm={searchTerm}f&sortBy={sortBy}");
 
-            if (response.IsSuccessStatusCode)
+            if (response != null)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<InventoryModel>>(content,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return response;
 
             }
             return new List<InventoryModel>();
@@ -69,14 +65,22 @@ namespace MyBlazorAppSourse.Services
             return false;
         }
 
+        public async Task<bool> ShareInventory(InventoryAccessModel access, string userId)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"api/Inventory/InventoryUserAccess/{userId}", access);
+            if(response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            return false;
+        }
+
         public async Task<List<ItemModel>> LoadItem(Guid inventoryId)
         {
-            var response = await _httpClient.GetAsync($"api/Inventory/GetItem/{inventoryId}");
-            if (response.IsSuccessStatusCode)
+            var response = await _httpClient.GetFromJsonAsync<List<ItemModel>>($"api/Inventory/GetItem/{inventoryId}");
+            if (response != null)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<ItemModel>>(content,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return response;
             }
             return new List<ItemModel>();
         }
@@ -109,13 +113,11 @@ namespace MyBlazorAppSourse.Services
 
         public async Task<List<InventoryModel>> LoadAllInventory(string searchTerm = null, string sortBy = null)
         {
-            var response = await _httpClient.GetAsync($"api/Inventory/GetAllInventory?searchTerm={searchTerm}&sortBy={sortBy}");
+            var response = await _httpClient.GetFromJsonAsync<List<InventoryModel>>($"api/Inventory/GetAllInventory?searchTerm={searchTerm}&sortBy={sortBy}");
 
-            if (response.IsSuccessStatusCode)
+            if (response != null)
             {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<InventoryModel>>(content,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                return response;
 
             }
             return new List<InventoryModel>();
@@ -141,11 +143,9 @@ namespace MyBlazorAppSourse.Services
 
         public async Task<List<DiscussionModel>> GetDiscussions(Guid inventoryId)
         {
-            var response = await _httpClient.GetAsync($"api/Inventory/GetDiscussion/{inventoryId}");
-            if (response.IsSuccessStatusCode) {
-                var content= await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<List<DiscussionModel>>(content,
-                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            var response = await _httpClient.GetFromJsonAsync<List<DiscussionModel>>($"api/Inventory/GetDiscussion/{inventoryId}");
+            if (response != null) {
+                return response;
             }
 
             return new List<DiscussionModel>();

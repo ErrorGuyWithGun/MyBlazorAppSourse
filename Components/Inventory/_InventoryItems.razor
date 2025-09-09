@@ -21,6 +21,7 @@ else
                     aria-controls="collapse-items-@inventoryId">
                 <p> Item: @(Items?.Count ?? 0)</p>
             </button>
+            <div class="collapse" id="collapse-items-@inventoryId">
             @if (isHidden == false) { 
             <_ActionBarItem openCreatePanel="isAddItem"
                     OnCreate="AddItem"
@@ -30,8 +31,9 @@ else
                     OnDelete="DeleteItem"
                     OnEdit="Edit"
                     OnSaveEditChange="@(()=> SaveEdit(ItemSingletonList))"
-                    />
+                 />
             }
+            </div>
         </div>
     </div>
     <div class="collapse" id="collapse-items-@inventoryId">
@@ -178,5 +180,5 @@ else
         await OnInventorySaved.InvokeAsync();
 
     }
-   
+
 }

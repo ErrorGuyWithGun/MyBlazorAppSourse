@@ -19,6 +19,7 @@
             <_ButtonSubmit OnClick="OnEdit" ButtnText="Edit" ButtnType="btn-info " IsDisable="@isDisable" />
             <_ButtonSubmit OnClick="OnDelete" ButtnText="Delete" ButtnType="btn-danger " IsDisable="@isDisable" />
 
+
         }
     </div>
 
@@ -41,4 +42,5 @@
     public EventCallback OnSaveChange { get; set; }
     [Parameter]
     public EventCallback OnSaveEditChange { get; set; }
+
 }
