@@ -96,6 +96,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xJbnZlbnRvcnlcX0l0ZW1Db3VudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Salesforce/SalesforceAccountList.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTYWxlc2ZvcmNlXFNhbGVzZm9yY2VBY2NvdW50TGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/Salesforce/_SalesforceRegistration.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTYWxlc2ZvcmNlXF9TYWxlc2ZvcmNlUmVnaXN0cmF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Data Research/ItransitionStude/task 4/BlazorApp1/BlazorApp1/Components/_ButtonSubmit.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfQnV0dG9uU3VibWl0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

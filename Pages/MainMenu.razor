@@ -9,8 +9,12 @@
 @using BlazorApp1.Components
 @using BlazorApp1.Components.Inventory
 
+
+
+
 <CascadingAuthenticationState>
-    <nav class="navbar fixed-top bg-body-tertiary bg-dark" data-bs-theme="dark">
+<_SalesforceRegistration/>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark" data-bs-theme="dark">
         <div class="d-flex">
             <AuthorizeView Roles="Admin">
                 <Authorized>
@@ -28,13 +32,15 @@
             </div>
                 <AuthorizeView >
                     <Authorized Context="authContext">
-                        <div class=" d-flex flex-grow-1 justify-content-center">
+                <div class=" d-flex my-2 my-lg-0 mx-auto">
+     
                         @if (authContext.User.IsInRole("Admin"))
                         {
                                 <_Search Search="@Search"
                                          SortBy="@SortBy"
                                          SearchChanged="@(async (value) => { Search = value; await UpdateInventoryAdmin(); })"
                                          SortByChanged="@(async (value) => { SortBy = value; await UpdateInventoryAdmin(); })" />
+
                         }
                         else if (authContext.User.IsInRole("User"))
                         {
@@ -44,12 +50,21 @@
                                          SortByChanged="@(async (value) => { SortBy = value; await UpdateInventoryUser(); })" />
                         }
                             </div>
-                <div class="position-fixed top-0 end-0 mt-2 me-2">
+
+                   <div class="navbar-nav ms-auto">
+                            <div class="nav-item d-flex">
+                               
+                    <_ButtonSubmit ButtnText="Salesforce"
+                                   Style="me-md-2"
+                                   ButtnType="btn-outline-dark btn-primary"
+                                   dataBsTarget="#staticBackdrop"
+                                   dataBsToggle="modal" />
 
                             <_ButtonSubmit OnClick="LogOut"
                                            ButtnText="LogOut"
                                             Style="me-md-2"
                                            ButtnType="btn-outline-dark btn-primary " />
+                        </div>
                         </div>
                     </Authorized>
                     <NotAuthorized>
@@ -63,15 +78,8 @@
                 </AuthorizeView>
     </nav>
 
-    <div class="p-2" style="margin-top: 10vh">
-        <AuthorizeView>
-            <Authorized Context="authContext">
-                <p>Hello, @authContext.User.Identity.Name! </p>
-            </Authorized>
-            <NotAuthorized>
-                <p>Guest</p>
-            </NotAuthorized>
-        </AuthorizeView>
+    <div>
+ 
 
         <AuthorizeView Roles="Admin,User">
             <Authorized Context="authContext">
@@ -100,11 +108,18 @@
     protected override async Task OnInitializedAsync()
     {
         currentUser = await UserService.GetCurrentUser();
-        allInv = await InventoryService.LoadAllInventory();
         await UserService.CheckUserStatus(currentUser);
-        userInv = await InventoryService.LoadInventory(currentUser.Id);
         InventorySingleton.userId = Convert.ToString(currentUser.Id);
-  
+
+        if (currentUser.Role == "Admin")
+        {
+            allInv = await InventoryService.LoadAllInventory();
+        }
+        if (currentUser.Role == "User")
+        {
+            userInv = await InventoryService.LoadInventory(currentUser.Id);
+        }
+
     }
 
 

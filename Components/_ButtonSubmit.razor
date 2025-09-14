@@ -2,8 +2,10 @@
 <div class="d-grid gap-2 p-2 ">
     <button 
         type="submit"
-            class=" btn @ButtnType @Style"
+            class=" btn btn-text @ButtnType @Style"
             disabled ="@IsDisable"
+            data-bs-toggle="@dataBsToggle"
+            data-bs-target="@dataBsTarget"
             @onclick = "HandleClick" >@ButtnText</button>
 </div>
 
@@ -17,6 +19,10 @@
 
     [Parameter]
     public string? ButtnType { get; set; }
+    [Parameter]
+    public string? dataBsToggle { get; set; }
+    [Parameter]
+    public string? dataBsTarget { get; set; }
 
     [Parameter]
     public string? Style { get; set; }

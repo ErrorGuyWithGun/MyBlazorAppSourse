@@ -1,0 +1,85 @@
+﻿@using MyBlazorAppSourse.Services
+@using MyBlazorAppSourse.Models
+@inject SalesforceService SalesforceService
+
+<div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Create Account</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+    <div class="row justify-content-center">
+        <div class="col">
+            <EditForm Model="@newAccount" OnValidSubmit="@HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <InputText id="name" class="form-control" @bind-Value="newAccount.Name" />
+                    <ValidationMessage For="@(() => newAccount.Name)" />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone:</label>
+                    <InputText id="phone" class="form-control" @bind-Value="newAccount.Phone" />
+                </div>
+
+                <div class="form-group">
+                    <label for="website">Web-site:</label>
+                    <InputText id="website" class="form-control" @bind-Value="newAccount.Website" />
+                    <div class="m-2">
+                    <_Error Error="@error" ErrorStyle="@errorStyle"/>
+                                </div>
+                </div>
+                <div class="-flex justify-content-end gap-2 mt-4">
+                <button type="submit" disabled="@isDisabled" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </EditForm>
+        </div>
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    private SalesforceAccount newAccount = new SalesforceAccount();
+
+    private string? error = string.Empty;
+    private string? errorStyle = string.Empty;
+    private bool isDisabled { get; set; } = false;
+
+    private async Task HandleValidSubmit()
+    {
+
+        newAccount.Id = "";
+        if (newAccount.Name == null || newAccount.Phone == null || newAccount == null)
+        {
+            error = "Fill All Fields";
+            errorStyle = "alert alert-danger";
+        }
+        else
+        {
+            var isCreate = await SalesforceService.CreateAccountAsync(newAccount);
+            if (isCreate != null)
+            {
+                error = "Create is Success";
+                errorStyle = "alert alert-success";
+                isDisabled = true;
+            }
+            else
+            {
+                error = "Create is Faild. Try again!";
+                errorStyle = "alert alert-danger";
+            }
+        }
+
+
+    }
+}

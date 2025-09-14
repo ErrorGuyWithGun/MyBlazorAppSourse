@@ -72,3 +72,10 @@ html, body {
     }
 
 }
+
+@media (max-width: 320px) {
+    .btn-text {
+        font-size: 8px;
+        padding: 2px 4px;
+    }
+}

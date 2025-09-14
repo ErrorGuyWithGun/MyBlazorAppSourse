@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization; 
 using MyBlazorAppSourse.Models;
+using MyBlazorAppSourse.Service;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -33,7 +34,7 @@ builder.Services.AddScoped<InventoryService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<UserService>();
 
-
+builder.Services.AddScoped<SalesforceService>();
 builder.Services.AddScoped<AuthenticationStateProvider>(sp =>
     sp.GetRequiredService<UserService>());
 

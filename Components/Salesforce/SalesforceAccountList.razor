@@ -1,0 +1,57 @@
+﻿@using MyBlazorAppSourse.Models
+@using MyBlazorAppSourse.Services
+@inject SalesforceService SalesforceService
+
+<div class="modal" id="staticBackdropUser" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+        <h1 class="modal-title col-md-6" id="staticBackdropLabel">Account List</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <div class="modal-body">
+            @if (accounts.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Web-site</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var account in accounts)
+                        {
+                            <tr>
+                                <td>@account.Name</td>
+                                <td>@account.Phone</td>
+                                <td>@account.Website</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            }
+            else
+            {
+                    <div class="spinner-border m-5" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+            }
+        
+        </div>
+        </div>
+        </div>
+        </div>
+    
+
+@code {
+    private List<SalesforceAccount> accounts = new List<SalesforceAccount>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        accounts = await SalesforceService.GetAccountsAsync();
+    }
+
+}
